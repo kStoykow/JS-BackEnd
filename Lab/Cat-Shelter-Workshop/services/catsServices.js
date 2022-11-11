@@ -1,11 +1,26 @@
-const getBreeds = () => require('../services/breeds.json');
-const getCats = () => require('../services/cats.json');
+const fs = require('fs');
 
-const addBreed = (breed) => {
-    const breeds = getBreeds().push(breed);
-    // breeds.push(breed);
+const cats = JSON.parse(fs.readFileSync('./services/cats.json'));
+const breeds = JSON.parse(fs.readFileSync('./services/breeds.json'));
+
+
+function getCats() {
+    return cats;
+}
+
+function getBreeds() {
     return breeds;
 }
 
+function addBreed(breed) {
+    breeds.push(breed);
+    fs.writeFileSync('./services/breeds.json', JSON.stringify(breeds, null, 2));
+}
 
-module.exports = { addBreed, getCats, getBreeds };
+function addCat(cat) {
+    cats.push(cat);
+    fs.writeFileSync('./services/cats.json', JSON.stringify(cats, null, 2));
+
+}
+
+module.exports = { addBreed, getCats, getBreeds, addCat };

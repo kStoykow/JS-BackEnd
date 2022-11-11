@@ -1,6 +1,7 @@
 const express = require('express');
 const hbr = require('express-handlebars');
 const bodyParser = require('body-parser');
+const fileUpload = require('express-fileupload');
 const handlebars = hbr.create({ extname: '.hbs' });
 
 const app = express();
@@ -10,6 +11,7 @@ app.set('view engine', '.hbs');
 
 app.use('/static', express.static('static'));
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(fileUpload({ createParentPath: true }));
 
 const homeController = require('./controllers/home');
 const catsController = require('./controllers/cats');

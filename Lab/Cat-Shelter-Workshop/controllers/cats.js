@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { addBreed, getCats } = require('../services/catsServices');
+const { addBreed, addCat } = require('../services/catsServices');
 
 
 router.get('/addBreed', (req, res) => res.render('addBreed'));
@@ -15,9 +15,14 @@ router.get('/addCat', (req, res) => {
 });
 
 router.post('/addCat', (req, res) => {
-    const cats = getCats();
-    console.log(cats);
-    res.render('details', { cats });
+    let img = req.files.upload;
+    img.mv('./static/images/' + img.name);
+
+    const id = ('0000' + Math.trunc(Math.random() * 9999)).slice(-4);
+    const newCat = { id, name: req.body.name, description: req.body.description, breed: req.body.breed, image: './static/images/' + img.name };
+
+    addCat(newCat);
+    res.redirect('/');
 });
 
 module.exports = router;
