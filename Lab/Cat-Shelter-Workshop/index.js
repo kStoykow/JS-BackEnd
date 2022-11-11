@@ -1,5 +1,6 @@
 const express = require('express');
 const hbr = require('express-handlebars');
+const bodyParser = require('body-parser');
 const handlebars = hbr.create({ extname: '.hbs' });
 
 const app = express();
@@ -8,14 +9,14 @@ app.engine('.hbs', handlebars.engine);
 app.set('view engine', '.hbs');
 
 app.use('/static', express.static('static'));
+app.use(bodyParser.urlencoded({ extended: true }));
+
+const homeController = require('./controllers/home');
+const catsController = require('./controllers/cats');
 
 
-const homeRouter = require('./controllers/home');
-const addBreedRouter = require('./controllers/addBreed');
-const addCatRouter = require('./controllers/addCat');
-
-app.use('/', homeRouter);
-app.use('/cats', addBreedRouter);
-app.use('/cats', addCatRouter);
+app.use(homeController);
+app.use('/cats', catsController);
+app.get('*', (req, res) => res.render('default'));
 
 app.listen(3000);
