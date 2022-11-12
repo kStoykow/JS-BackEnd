@@ -11,6 +11,9 @@ function getCats() {
 function getBreeds() {
     return breeds;
 }
+function getCat(id) {
+    return cats.find(cat => cat.id == id);
+}
 
 function addBreed(breed) {
     breeds.push(breed);
@@ -23,4 +26,4 @@ function addCat(cat) {
 
 }
 
-module.exports = { addBreed, getCats, getBreeds, addCat };
+module.exports = { addBreed, getCats, getBreeds, addCat, getCat };

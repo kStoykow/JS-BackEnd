@@ -15,10 +15,13 @@ app.use(fileUpload({ createParentPath: true }));
 
 const homeController = require('./controllers/home');
 const catsController = require('./controllers/cats');
+const detailsController = require('./controllers/details');
 
 
 app.use(homeController);
 app.use('/cats', catsController);
+app.use('/details', detailsController);
+
 app.get('*', (req, res) => res.render('default'));
 
 app.listen(3000);

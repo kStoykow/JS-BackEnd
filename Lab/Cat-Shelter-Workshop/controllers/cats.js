@@ -20,9 +20,8 @@ router.post('/addCat', (req, res) => {
 
     const id = ('0000' + Math.trunc(Math.random() * 9999)).slice(-4);
     const newCat = { id, name: req.body.name, description: req.body.description, breed: req.body.breed, image: './static/images/' + img.name };
-
     addCat(newCat);
-    res.redirect('/');
+    res.redirect(`/details/${id}`);
 });
 
 module.exports = router;
