@@ -23,7 +23,12 @@ function addBreed(breed) {
 function addCat(cat) {
     cats.push(cat);
     fs.writeFileSync('./services/cats.json', JSON.stringify(cats, null, 2));
-
 }
 
-module.exports = { addBreed, getCats, getBreeds, addCat, getCat };
+function editCat(id, newCat) {
+    const cat = cats.find(e => e.id == id);
+    console.log(cats);
+    cats.splice(cats.indexOf(cat), 1, newCat);
+    fs.writeFileSync('./services/cats.json', JSON.stringify(cats, null, 2));
+}
+module.exports = { addBreed, getCats, getBreeds, addCat, getCat, editCat };
