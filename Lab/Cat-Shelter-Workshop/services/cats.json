@@ -21,23 +21,16 @@
     "image": "https://cdn.pixabay.com/photo/2018/08/08/05/12/cat-3591348_1280.jpg"
   },
   {
-    "name": "Jhonny",
+    "name": "Daisy",
     "id": "6635",
-    "description": "badcat",
+    "description": "Bad cat. Good cat. Split personality.",
     "breed": "Unknown",
     "image": "./static/images/pexels-pixabay-45201.jpg"
   },
   {
-    "id": "1922",
     "name": "Wildy",
-    "description": "wild card cat",
-    "breed": "Wild",
-    "image": "./static/images/international-cat-day-640x514.jpg"
-  },
-  {
-    "name": "Beesty",
-    "id": "5809",
-    "description": "Stinks like a bee.",
+    "id": "1922",
+    "description": "Wild card cat. Killed a dog once.",
     "breed": "Wild",
     "image": "./static/images/international-cat-day-640x514.jpg"
   },

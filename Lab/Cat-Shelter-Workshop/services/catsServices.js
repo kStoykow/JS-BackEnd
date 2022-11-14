@@ -30,4 +30,10 @@ function editCat(id, newCat) {
     cats.splice(cats.indexOf(cat), 1, newCat);
     fs.writeFileSync('./services/cats.json', JSON.stringify(cats, null, 2));
 }
-module.exports = { addBreed, getCats, getBreeds, addCat, getCat, editCat };
+
+function deleteCat(id) {
+    const cat = cats.find(e => e.id == id);
+    cats.splice(cats.indexOf(cat), 1);
+    fs.writeFileSync('./services/cats.json', JSON.stringify(cats, null, 2));
+}
+module.exports = { addBreed, getCats, getBreeds, addCat, getCat, editCat, deleteCat };
