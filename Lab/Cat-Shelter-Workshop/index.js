@@ -2,10 +2,11 @@ const express = require('express');
 const hbr = require('express-handlebars');
 const bodyParser = require('body-parser');
 const fileUpload = require('express-fileupload');
-const handlebars = hbr.create({ extname: '.hbs' });
+
 
 const app = express();
 
+const handlebars = hbr.create({ extname: '.hbs' });
 app.engine('.hbs', handlebars.engine);
 app.set('view engine', '.hbs');
 

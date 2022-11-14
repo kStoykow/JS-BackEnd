@@ -4,8 +4,11 @@ const cats = JSON.parse(fs.readFileSync('./services/cats.json'));
 const breeds = JSON.parse(fs.readFileSync('./services/breeds.json'));
 
 
-function getCats() {
-    return cats;
+function getCats(search) {
+    if (search == undefined || search == '') {
+        return cats;
+    }
+    return cats.filter(e => e.name.toLocaleLowerCase().includes(search.toLocaleLowerCase()));
 }
 
 function getBreeds() {
@@ -36,4 +39,5 @@ function deleteCat(id) {
     cats.splice(cats.indexOf(cat), 1);
     fs.writeFileSync('./services/cats.json', JSON.stringify(cats, null, 2));
 }
+
 module.exports = { addBreed, getCats, getBreeds, addCat, getCat, editCat, deleteCat };

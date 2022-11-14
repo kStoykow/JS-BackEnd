@@ -6,12 +6,12 @@ router.get('/addBreed', (req, res) => res.render('addBreed'));
 
 router.post('/addBreed', (req, res) => {
     addBreed(req.body.breed);
-    res.redirect('/cats/addCat')
+    res.redirect('/cats/addCat');
 });
 
 router.get('/addCat', (req, res) => {
     const breeds = require('../services/breeds.json');
-    res.render('addCat', { breeds })
+    res.render('addCat', { breeds });
 });
 
 router.post('/addCat', (req, res) => {
