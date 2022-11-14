@@ -4,7 +4,7 @@ const { getCat, editCat, getBreeds } = require('../services/catsServices');
 router.get('/:id', (req, res) => {
     const id = req.params.id;
     const cat = getCat(id);
-    const breeds = getBreeds();
+    const breeds = getBreeds().filter(e => e != cat.breed);
     res.render('editCat', { cat, breeds })
 });
 

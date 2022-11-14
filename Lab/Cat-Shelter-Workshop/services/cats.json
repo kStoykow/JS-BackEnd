@@ -10,14 +10,14 @@
     "name": "Sammy",
     "id": "3211",
     "description": "Lovely to other cats. Will probably love you forever. Not very cute tho.",
-    "breed": "Persian",
+    "breed": "Ungor",
     "image": "https://cdn.pixabay.com/photo/2015/06/19/14/20/cat-814952_1280.jpg"
   },
   {
     "name": "Tomy",
     "id": "5121",
-    "description": "Lion by soul, snail by movement. Will probably sleep forever. Very hungry tho, eats everything even furniture.",
-    "breed": "Ungor",
+    "description": "Lion by soul, but will probably sleep forever. Very hungry tho, eats everything even furniture.",
+    "breed": "Persian",
     "image": "https://cdn.pixabay.com/photo/2018/08/08/05/12/cat-3591348_1280.jpg"
   },
   {
@@ -32,14 +32,6 @@
     "name": "Wildy",
     "description": "wild card cat",
     "breed": "Wild",
-    "image": "./static/images/international-cat-day-640x514.jpg",
-    "_locals": {}
-  },
-  {
-    "name": "2qeqwe",
-    "id": "2373",
-    "description": "qweqwewqe",
-    "breed": "Unknown",
     "image": "./static/images/international-cat-day-640x514.jpg"
   },
   {
@@ -48,5 +40,12 @@
     "description": "Stinks like a bee.",
     "breed": "Wild",
     "image": "./static/images/international-cat-day-640x514.jpg"
+  },
+  {
+    "name": "Kami",
+    "id": "1005",
+    "description": "Gray with black strapes and blue eyes. Very cute. It likes to sleep.",
+    "breed": "Persian",
+    "image": "./static/images/download.jpeg"
   }
 ]
