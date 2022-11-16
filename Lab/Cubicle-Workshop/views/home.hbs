@@ -1,0 +1,28 @@
+<h1>Browser</h1>
+<form action="/" method="/get">
+    {{#if search}}
+    <input type="text" class="search" name="search" placeholder="search" value="{{search}}">
+    {{else}}
+    <input type="text" class="search" name="search" placeholder="Search...">
+    {{/if}}
+
+    {{#if from}}
+    <input type="number" name="from" class="difficulty" placeholder="Difficulty from..." value="{{from}}">
+    {{else}}
+    <input type="number" name="from" class="difficulty" placeholder="Difficulty from...">
+    {{/if}}
+    <span>-</span>
+    {{#if to}}
+    <input type="number" name="to" class="difficulty" placeholder="Difficulty to..." value="{{to}}">
+    {{else}}
+    <input type="number" name="to" class="difficulty" placeholder="Difficulty to...">
+    {{/if}}
+    <input type="submit" value="search">
+</form>
+{{#if cubes}}
+{{#each cubes}}
+{{> cube}}
+{{/each}}
+{{else}}
+<h1>NO CUBES WERE FOUND</h1>
+{{/if}}
