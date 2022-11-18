@@ -19,6 +19,6 @@ const AccessoarySchema = new Schema({
     cubes: { type: [Types.ObjectId], default: [], ref: 'Cube' }
 });
 
-const Accessoary = model('Accessoary', AccessoarySchema);
+const Accessory = model('Accessory', AccessoarySchema);
 
-module.exports = Accessoary;
+module.exports = Accessory;
