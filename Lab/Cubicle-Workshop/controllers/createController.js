@@ -1,16 +1,19 @@
 const createController = require('express').Router();
 
-const createId = require('uniqid');
-const cubeModel = require('../models/cubeModel');
-const { saveCube } = require('./cubeController');
+const { createCube } = require('../services/cubeService');
 
-createController.get('/', (req, res) => res.render('create', { title: 'Create Cube Page' }));
+createController.get('/', async (req, res) => res.render('create', { title: 'Create Cube Page' }));
 
-createController.post('/', (req, res) => {
-    const id = createId();
-    const cube = cubeModel(id, req.body.name, req.body.description, req.body.imageUrl, Number(req.body.difficultyLevel));
-    saveCube(cube);
-    res.redirect('/details/' + id);
+createController.post('/', async (req, res) => {
+    const newCube = { name: req.body.name, description: req.body.description, imageUrl: req.body.imageUrl, difficulty: Number(req.body.difficultyLevel) }
+    try {
+        const cube = await createCube(newCube);
+        res.redirect('/details/' + cube._id);
+
+    } catch (err) {
+        console.log(err); // make specific page for wrong info
+        res.render('404');
+    }
 });
 
 module.exports = createController;

@@ -1,0 +1,24 @@
+const { Schema, model, Types } = require('mongoose');
+
+function httpValidator(v) {
+    return v.startsWith('http') || v.startsWith('https');
+}
+
+
+const AccessoarySchema = new Schema({
+    name: { type: String, required: true },
+    imageUrl: {
+        type: String,
+        required: true,
+        validate: {
+            validator: httpValidator,
+            message: 'Wrong protocol.'
+        }
+    },
+    description: { type: String, required: true, maxLength: 40 },
+    cubes: { type: [Types.ObjectId], default: [], ref: 'Cube' }
+});
+
+const Accessoary = model('Accessoary', AccessoarySchema);
+
+module.exports = Accessoary;

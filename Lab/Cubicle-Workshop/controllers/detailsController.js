@@ -1,12 +1,14 @@
 const detailsController = require('express').Router();
 
-const { getById } = require('../controllers/cubeController');
+const { getCubeById } = require('../services/cubeService');
 
-detailsController.get('/:id', (req, res) => {
-    const cube = getById(req.params.id);
-    if (cube != undefined) {
+detailsController.get('/:id', async (req, res) => {
+
+    try {
+        const cube = await getCubeById(req.params.id);
         res.render('details', { title: 'Cubicle', cube });
-    } else {
+
+    } catch (error) {
         res.render('404');
     }
 });
