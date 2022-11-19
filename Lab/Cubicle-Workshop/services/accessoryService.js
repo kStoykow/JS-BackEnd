@@ -17,7 +17,7 @@ async function attachAccessory(accessoryName, cubeId) {
 
 
 async function cubeAvailableAccessory(cubeId) {
-    return await Accessory.find({}).where('cubes').ne(cubeId);
+    return Accessory.find({}).where('cubes').ne(cubeId);
 }
 module.exports = {
     createAccessory,
