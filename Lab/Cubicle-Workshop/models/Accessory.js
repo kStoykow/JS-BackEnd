@@ -15,7 +15,7 @@ const AccessoarySchema = new Schema({
             message: 'Wrong protocol.'
         }
     },
-    description: { type: String, required: true, maxLength: 40 },
+    description: { type: String, required: true, minLength: 1 },
     cubes: { type: [Types.ObjectId], default: [], ref: 'Cube' }
 });
 

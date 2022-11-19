@@ -9,16 +9,14 @@ createAccessoryController.get('/', async (req, res) => {
 createAccessoryController.post('/', async (req, res) => {
     try {
         const newAccesory = { name: req.body.name, description: req.body.description, imageUrl: req.body.imageUrl };
-        const accessory = await createAccessory(newAccesory);
-        console.log(accessory);
+        await createAccessory(newAccesory);
 
         res.redirect('/');
 
     } catch (error) {
         res.render('404');
     }
-
-})
+});
 
 
 module.exports = createAccessoryController;

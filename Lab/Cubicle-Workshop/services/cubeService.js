@@ -15,9 +15,10 @@ async function createCube(data) {
     return cube;
 }
 
-async function getCubeAccessory(id) {
-    const asd = await Cube.find({}).where('_id').equals(id);
-    console.log(asd);
+async function getCubeAccessory(cubeId) {
+    const accessory = await Cube.findOne({}).where('_id').equals(cubeId).populate('accessories');
+    return accessory;
+
 }
 
 module.exports = {

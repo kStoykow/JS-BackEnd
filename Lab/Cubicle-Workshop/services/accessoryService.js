@@ -1,27 +1,26 @@
 const Accessory = require('../models/Accessory');
+const Cube = require('../models/Cube');
 
 async function createAccessory(data) {
     const accessory = await Accessory.create(data);
     return accessory;
 }
 
-async function getAllAccessories() {
-    const accessories = await Accessory.find().lean();
-    return accessories;
-}
-
-async function attachAccessory(name, cube) {
-    const accessory = await Accessory.findOne({}).where('name').equals(name, cube);
-
+async function attachAccessory(accessoryName, cubeName) {
+    const accessory = await Accessory.findOne({}).where('name').equals(accessoryName);
+    const cube = await Cube.findOne({}).where('name').equals(cubeName);
     accessory.cubes.push(cube);
-    await accessory.save(); 
-    
-    // make relations in cube model
-    // finish population of accessories cubes and search
+    cube.accessories.push(accessory);
+    await accessory.save();
+    await cube.save();
 }
 
+
+async function cubeAvailableAccessory(cubeId) {
+    return await Accessory.find({}).where('cubes').ne(cubeId);
+}
 module.exports = {
     createAccessory,
-    getAllAccessories,
-    attachAccessory
+    attachAccessory,
+    cubeAvailableAccessory
 }

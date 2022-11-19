@@ -6,7 +6,7 @@ function httpValidator(v) {
 
 const CubeSchema = new Schema({
     name: { type: String, required: true },
-    description: { type: String, required: true, maxLength: 10 },
+    description: { type: String, required: true, minLength: 1 },
     imageUrl: {
         type: String,
         required: true,
