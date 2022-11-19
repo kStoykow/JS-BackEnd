@@ -1,7 +1,15 @@
 const Cube = require('../models/Cube');
 
-async function getAllCubes() {
-    const cubes = await Cube.find({}).lean();
+async function searchCubes(name, from, to) {
+    const regex = new RegExp(name, 'gim');
+    if (from == '') {
+        from = 0;
+    }
+    if (to == '') {
+        to = 6;
+    }
+
+    const cubes = await Cube.find({ 'name': { $regex: regex } }).where('difficulty').gte(from).lte(to).lean();
     return cubes;
 }
 
@@ -22,7 +30,7 @@ async function getCubeAccessory(cubeId) {
 }
 
 module.exports = {
-    getAllCubes,
+    searchCubes,
     getCubeById,
     createCube,
     getCubeAccessory

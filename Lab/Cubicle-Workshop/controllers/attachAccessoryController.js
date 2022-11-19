@@ -20,11 +20,9 @@ attachAccessoaryController.post('/:id', async (req, res) => {
     const accessoryName = req.body.accessory;
 
     try {
-        const cube = await getCubeById(req.params.id);
+        await attachAccessory(accessoryName, req.params.id);
 
-        await attachAccessory(accessoryName, cube.name);
-
-        res.redirect('/details/' + cube._id);
+        res.redirect('/details/' + req.params.id);
 
     } catch (error) {
         res.render('404');

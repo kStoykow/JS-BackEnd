@@ -4,7 +4,7 @@ const config = require('./config/config')[env];
 const mongoose = require('mongoose');
 
 const connectionString = 'mongodb://127.0.0.1:27017/cubical';
-const { allCubes } = require('./services/cubeService');
+
 start();
 
 async function start() {

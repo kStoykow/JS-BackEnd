@@ -5,14 +5,14 @@ const { createCube } = require('../services/cubeService');
 cubeController.get('/', async (req, res) => res.render('create', { title: 'Create Cube Page' }));
 
 cubeController.post('/', async (req, res) => {
-    const newCube = { name: req.body.name, description: req.body.description, imageUrl: req.body.imageUrl, difficulty: Number(req.body.difficultyLevel) }
+    const cubeData = { name: req.body.name, description: req.body.description, imageUrl: req.body.imageUrl, difficulty: Number(req.body.difficultyLevel) }
+
     try {
-        const cube = await createCube(newCube);
+        const cube = await createCube(cubeData);
         res.redirect('/details/' + cube._id);
 
     } catch (err) {
-        console.log(err); // make specific page for wrong info
-        res.render('404');
+        res.render('404'); // could make specific page for wrong info
     }
 });
 
