@@ -10,28 +10,35 @@ async function searchCubes(name, from, to) {
     }
 
     return Cube.find({ 'name': { $regex: regex } }).where('difficulty').gte(from).lte(to).lean();
-    // return cubes;
 }
 
 async function getCubeById(id) {
     return Cube.findOne({}).where('_id').equals(id).lean();
-    // return cube;
+
 }
 
 async function createCube(data) {
     return Cube.create(data);
-    // return cube;
 }
 
 async function getCubeAccessory(cubeId) {
     return Cube.findOne({}).where('_id').equals(cubeId).populate('accessories');
-    // return accessory;
+}
 
+async function editCube(cubeId, data) {
+    const cube = await Cube.findById(cubeId);
+
+    for (const key in data) {
+        cube[key] = data[key];
+    }
+
+    await cube.save();
 }
 
 module.exports = {
     searchCubes,
     getCubeById,
     createCube,
-    getCubeAccessory
+    getCubeAccessory,
+    editCube
 }

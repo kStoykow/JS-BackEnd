@@ -21,7 +21,7 @@ async function login(username, password) {
         throw new Error('Username or password doesn\'t match');
     }
 
-    const payload = { username };
+    const payload = { username, id: user._id };
     return jwt.sign(payload, secretKey);
 }
 
