@@ -3,7 +3,7 @@ const registerController = require('express').Router();
 const { createUser } = require('../services/userService');
 
 
-registerController.get('/', (req, res) => res.render('register'));
+registerController.get('/', (req, res) => res.render('register', { title: 'Register', user: req.user }));
 
 
 registerController.post('/', async (req, res) => {

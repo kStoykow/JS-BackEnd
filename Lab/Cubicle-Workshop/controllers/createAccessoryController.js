@@ -3,7 +3,7 @@ const createAccessoryController = require('express').Router();
 const { createAccessory } = require('../services/accessoryService');
 
 createAccessoryController.get('/', async (req, res) => {
-    res.render('accessory', { title: 'Create Accessory' })
+    res.render('accessory', { title: 'Create Accessory', user: req.user })
 });
 
 createAccessoryController.post('/', async (req, res) => {

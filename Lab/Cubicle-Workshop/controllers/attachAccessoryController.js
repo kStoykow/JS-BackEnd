@@ -8,7 +8,7 @@ attachAccessoaryController.get('/:id', async (req, res) => {
         const cube = await getCubeById(req.params.id);
         const accessories = await cubeAvailableAccessory(req.params.id);
 
-        res.render('attach', { title: 'Attach Accessory', cube, accessories });
+        res.render('attach', { title: 'Attach Accessory', user: req.user, cube, accessories });
 
     } catch (error) {
         res.render('404');
