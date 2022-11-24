@@ -1,23 +1,32 @@
 const User = require('../models/User');
-const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 const secretKey = 'my-secret-token';
 
 async function createUser(username, password) {
     return User.create({ username, password });
 }
 
-async function getUser(user) {
-    return User.find({}).where('username').equals(user.username).lean();
+async function isUsernameTaken(username) {
+    const regex = new RegExp(`^${username}$`, 'i');
+    const match = await User.findOne({ username: { $regex: regex } }).lean();
+    return match == null ? false : true;
 }
 
 async function login(username, password) {
-    const payload = { username, password: await bcrypt.hash(password, 10) };
+    const regex = new RegExp(`^${username}$`, 'i');
+    const user = await User.findOne({ username: { $regex: regex } });
+
+    if (user == null || await bcrypt.compare(password, user.password) != true) {
+        throw new Error('Username or password doesn\'t match');
+    }
+
+    const payload = { username };
     return jwt.sign(payload, secretKey);
 }
 
 module.exports = {
     createUser,
-    getUser,
-    login
+    login,
+    isUsernameTaken
 }
