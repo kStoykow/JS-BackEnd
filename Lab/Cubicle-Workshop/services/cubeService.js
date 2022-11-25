@@ -1,4 +1,5 @@
 const Cube = require('../models/Cube');
+const User = require('../models/User');
 
 async function searchCubes(name, from, to) {
     const regex = new RegExp(name, 'gim');
@@ -22,7 +23,7 @@ async function createCube(data) {
 }
 
 async function getCubeAccessory(cubeId) {
-    return Cube.findOne({}).where('_id').equals(cubeId).populate('accessories');
+    return Cube.findById(cubeId).populate('accessories').lean();
 }
 
 async function editCube(cubeId, data) {

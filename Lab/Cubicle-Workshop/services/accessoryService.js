@@ -8,7 +8,7 @@ async function createAccessory(data) {
 
 async function attachAccessory(accessoryName, cubeId) {
     const accessory = await Accessory.findOne({}).where('name').equals(accessoryName);
-    const cube = await Cube.findOne({}).where('_id').equals(cubeId);
+    const cube = await Cube.findById(cubeId);
     accessory.cubes.push(cube);
     cube.accessories.push(accessory);
     await accessory.save();

@@ -1,10 +1,7 @@
 const createAccessoryController = require('express').Router();
-
 const { createAccessory } = require('../services/accessoryService');
 
-createAccessoryController.get('/', async (req, res) => {
-    res.render('accessory', { title: 'Create Accessory', user: req.user })
-});
+createAccessoryController.get('/', async (req, res) => res.render('accessory', { title: 'Create Accessory', user: req.user }));
 
 createAccessoryController.post('/', async (req, res) => {
     try {
@@ -14,7 +11,8 @@ createAccessoryController.post('/', async (req, res) => {
         res.redirect('/');
 
     } catch (error) {
-        res.render('404');
+        console.log(error.message);
+        res.render('accessory', { title: 'Create Accessory', user: req.user, error: error.message });
     }
 });
 

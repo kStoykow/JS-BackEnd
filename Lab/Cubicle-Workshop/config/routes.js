@@ -12,6 +12,7 @@ const registerController = require('../controllers/registerController');
 const editController = require('../controllers/editController');
 const deleteController = require('../controllers/deleteController');
 const logoutController = require('../controllers/logoutController');
+const auth = require('../services/auth');
 
 
 module.exports = (app) => {
@@ -23,8 +24,8 @@ module.exports = (app) => {
     app.use('/edit', editController);
     app.use('/delete', deleteController);
     app.use('/about', aboutController);
-    app.use('/create/cube', cubeController);
-    app.use('/create/accessory', createAccessoryController);
+    app.use('/create/cube', auth, cubeController);
+    app.use('/create/accessory', auth, createAccessoryController);
     app.use('/attach/accessory', attachAccessoryController);
     app.use('/details', detailsController);
     app.use('*', defaultController);
