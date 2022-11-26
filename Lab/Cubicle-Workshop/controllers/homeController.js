@@ -1,6 +1,7 @@
 const homeController = require('express').Router();
 
-const { searchCubes } = require('../services/cubeService');
+const { searchCubes, difficultyMap } = require('../services/cubeService');
+
 
 homeController.get('/', async (req, res) => {
     const search = req.query.search || '';
@@ -9,6 +10,7 @@ homeController.get('/', async (req, res) => {
 
     try {
         const cubes = await searchCubes(search, from, to);
+        cubes.map(e => e.difficulty = difficultyMap[e.difficulty]);
 
         res.render('home', { title: 'Cubicle', user: req.user, cubes, search, from, to });
     } catch (error) {

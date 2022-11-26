@@ -21,12 +21,12 @@ module.exports = (app) => {
     app.use('/login', loginController);
     app.use('/logout', logoutController);
     app.use('/register', registerController);
-    app.use('/edit', editController);
-    app.use('/delete', deleteController);
+    app.use('/edit', auth, editController);
+    app.use('/delete', auth, deleteController);
     app.use('/about', aboutController);
     app.use('/create/cube', auth, cubeController);
     app.use('/create/accessory', auth, createAccessoryController);
-    app.use('/attach/accessory', attachAccessoryController);
+    app.use('/attach/accessory', auth, attachAccessoryController);
     app.use('/details', detailsController);
     app.use('*', defaultController);
 };

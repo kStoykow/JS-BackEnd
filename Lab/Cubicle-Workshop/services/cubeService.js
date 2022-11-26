@@ -1,5 +1,14 @@
 const Cube = require('../models/Cube');
-const User = require('../models/User');
+const Accessory = require('../models/Accessory');
+
+const difficultyMap = {
+    '1': '1 - Very Easy',
+    '2': '2 - Easy',
+    '3': '3 - Medium (Standard 3x3)',
+    '4': '4 - Intermediate',
+    '5': '5 - Expert',
+    '6': '6 - Hardcore'
+}
 
 async function searchCubes(name, from, to) {
     const regex = new RegExp(name, 'gim');
@@ -36,10 +45,32 @@ async function editCube(cubeId, data) {
     await cube.save();
 }
 
+async function deleteCube(id) {
+    const cube = await Cube.findById(id).populate('accessories');
+    const accessories = await Accessory.find({ '_id': { $in: cube.accessories } });
+    console.log(accessories, ' before');
+    accessories.forEach(async e => {
+        await Accessory.findOneAndRemove({ '_id': e._id });// TODO: finish remove. Previous one deleted documents from db not refferences
+    });
+    console.log(accessories, ' afetr');
+
+    // await Cube.deleteOne({}).where('_id').equals(id);
+}
+
 module.exports = {
     searchCubes,
     getCubeById,
     createCube,
     getCubeAccessory,
-    editCube
+    editCube,
+    deleteCube,
+    difficultyMap
 }
+
+
+
+// KIDDORI
+
+// Description: Perfect cube for kids between 2-6 y.o.
+
+// Difficulty level: 1 - Very Easy

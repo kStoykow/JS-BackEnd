@@ -5,11 +5,4 @@ function auth(req, res, next) {
     next();
 }
 
-function permission(req, res, next) {
-    if (req.user.cubes.includes(id)) {
-        //TODO: check if user is creator and give permission;
-    }
-
-    next();
-}
 module.exports = auth;
