@@ -6,7 +6,8 @@ deleteController.get('/:id', async (req, res) => {
     try {
         const cube = await getCubeById(req.params.id);
         cube.difficulty = difficultyMap[cube.difficulty];
-        if (req.user?.id != cube.creatorId) {
+        
+        if (req.user.id != cube.creatorId) {
             res.render('404', { title: 'Forbidden', user: req.user, code: 403, message: 'You don\'t have permission for this page.' });
         } else {
             res.render('delete', { title: 'Delete Cube', user: req.user, cube });

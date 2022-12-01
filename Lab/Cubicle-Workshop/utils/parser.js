@@ -1,10 +1,14 @@
 function errorParser(error) {
 
     if (error.name == 'ValidationError') {
-        const err = [Object.fromEntries(Object.entries(error.errors).map(([field, props]) => [field, props.message]))];
+        const err = [Object.fromEntries(Object.entries(error.errors).map(([field, props]) => ['msg', props.message]))];
         return err;
-        //TODO : make errors equal
+
     } else if (Array.isArray(error)) {
+        return error.reduce((a, b) => {
+            a.push({ msg: b.msg })
+            return a;
+        }, []);
 
     } else {
         return [{ msg: error.message }];

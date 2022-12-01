@@ -12,7 +12,7 @@ const AccessoarySchema = new Schema({
         required: true,
         validate: {
             validator: httpValidator,
-            message: 'Wrong protocol.'
+            message: 'ImageUrl wrong protocol.'
         }
     },
     description: { type: String, required: true, minLength: 1 },

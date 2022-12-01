@@ -2,8 +2,8 @@ const Accessory = require('../models/Accessory');
 const Cube = require('../models/Cube');
 
 async function createAccessory(data) {
-    const accessory = await Accessory.create(data);
-    return accessory;
+    return Accessory.create(data);
+
 }
 
 async function attachAccessory(accessoryName, cubeId) {

@@ -10,11 +10,9 @@ registerController.get('/', (req, res) => res.render('register', { title: 'Regis
 
 registerController.post('/',
     body(['username', 'password', 'repeatPassword']).trim(),
-    // body('username').notEmpty().withMessage('All fields are required.'),
-    body('password').notEmpty().withMessage('All fields are required.'),
+    body('username').notEmpty().withMessage('Username is required.'),
     body('password').isLength({ min: 3 }).withMessage('Password length must be atleast 3.'),
     body('repeatPassword').notEmpty().withMessage('All fields are required.'),
-
     async (req, res) => {
         try {
             const { errors } = validationResult(req);
@@ -36,14 +34,7 @@ registerController.post('/',
             res.redirect('/register');
 
         } catch (error) {
-            // if (error.name == 'ValidationError') {
-            //     const err = Object.fromEntries(Object.entries(error.errors).map(([field, props]) => [field, props.message]))
-            //     console.log(err);
-            // }
-            // console.log(error);
-            const a = errorParser(error)
-            console.log(a);
-            res.render('register', { title: 'Register', user: req.user, error: errorParser(error) });
+            res.render('register', { title: 'Register', body: req.body, user: req.user, error: errorParser(error) });
         }
     });
 

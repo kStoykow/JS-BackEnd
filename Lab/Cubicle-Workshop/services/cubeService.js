@@ -38,7 +38,7 @@ async function editCube(cubeId, data) {
     const cube = await Cube.findById(cubeId);
 
     for (const key in data) {
-        cube[key] = data[key];
+        cube[key] = data[key]; //Will change only fields that cube in DB has. Fake fields won't have effect;
     }
 
     await cube.save();

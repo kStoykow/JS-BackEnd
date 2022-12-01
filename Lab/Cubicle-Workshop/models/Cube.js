@@ -12,7 +12,7 @@ const CubeSchema = new Schema({
         required: true,
         validate: {
             validator: httpValidator,
-            message: 'Wrong protocol.'
+            message: 'Image Url wrong protocol.'
         }
     },
     difficulty: { type: Number, required: true, min: 1, max: 6 },
