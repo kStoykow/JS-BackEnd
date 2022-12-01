@@ -12,7 +12,7 @@ const registerController = require('../controllers/registerController');
 const editController = require('../controllers/editController');
 const deleteController = require('../controllers/deleteController');
 const logoutController = require('../controllers/logoutController');
-const auth = require('../services/auth');
+const auth = require('../middlewares/auth');
 
 
 module.exports = (app) => {

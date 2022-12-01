@@ -2,7 +2,6 @@ const express = require('express');
 const handlebars = require('express-handlebars');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
-// const session = require('express-session');
 const jwt = require('jsonwebtoken');
 
 const secretKey = 'my-secret-token';
@@ -16,7 +15,6 @@ module.exports = (app) => {
     app.set('view engine', '.hbs');
 
     app.use(bodyParser.urlencoded({ extended: true }));
-
     app.use('/static/', express.static('static'));
 
     app.use(cookieParser());

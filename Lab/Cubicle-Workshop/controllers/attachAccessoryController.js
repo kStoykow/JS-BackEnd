@@ -1,4 +1,5 @@
 const attachAccessoaryController = require('express').Router();
+const { body, validationResult } = require('express-validator');
 
 const { getCubeById } = require('../services/cubeService');
 const { attachAccessory, cubeAvailableAccessory } = require('../services/accessoryService');
