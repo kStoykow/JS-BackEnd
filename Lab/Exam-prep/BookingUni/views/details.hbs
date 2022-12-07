@@ -18,11 +18,16 @@
             <div> {{hotel.city}} </div>
             <p><span>Free rooms: {{hotel.freeRooms}}</span> </p>
 
-            <p><span class="green">You already have booked a room</span> </p>
-
-            <a href="/book/{{hotel._id}}" class="book">Book</a>
+            {{#if owner}}
             <a href="/edit/{{hotel._id}}" class="edit">Edit</a>
             <a href="/delete/{{hotel._id}}" class="remove">Delete</a>
+            {{else}}
+                {{#if isBooked}}
+                <p><span class="green">You already have booked a room</span> </p>
+                {{else}}
+                <a href="/book/{{hotel._id}}" class="book">Book</a>
+                {{/if}}
+            {{/if}}
         </div>
 
     </div>

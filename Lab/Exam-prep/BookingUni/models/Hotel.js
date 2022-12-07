@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model, Types } = require('mongoose');
 
 const hotelSchema = new Schema({
     name: { type: String, required: true, unique: true, minLength: [4, 'Name must be atleast 4 letters.'] },
@@ -12,7 +12,11 @@ const hotelSchema = new Schema({
         }
     },
     freeRooms: { type: Number, min: [1, 'Minimum 1 room'], max: [100, 'Maximum 100 rooms'] },
+    creatorId: { type: String, required: true },
+    guests: { type: [Types.ObjectId], ref: 'User', default: [] }
 });
+
+
 hotelSchema.index({ name: 1 }, {
     collation: {
         locale: 'en',

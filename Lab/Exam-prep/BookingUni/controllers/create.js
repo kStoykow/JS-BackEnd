@@ -4,7 +4,7 @@ const { parseError } = require('../util/errorParser');
 const create = require('express').Router();
 
 create.get('/', (req, res) => {
-    res.render('create');
+    res.render('create', { title: 'Create Hotel' });
 });
 
 create.post('/', async (req, res) => {
@@ -18,11 +18,13 @@ create.post('/', async (req, res) => {
             throw new Error('All fields are required.');
         }
 
-        await createHotel({ name, city, freeRooms: Number(freeRooms), imageUrl });
+        await createHotel({ name, city, freeRooms: Number(freeRooms), imageUrl, creatorId: req.user });
         res.redirect('/');
+
     } catch (error) {
         const errors = parseError(error);
-        res.render('create', { title: 'Create Hotel', body: req.body, error: errors });
+        const body = { name: req.body.hotel, city: req.body.city, freeRooms: req.body['free-rooms'], imageUrl: req.body.imgUrl }
+        res.render('create', { title: 'Create Hotel', body, error: errors });
     }
 });
 
