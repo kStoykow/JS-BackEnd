@@ -12,7 +12,7 @@ module.exports = async (app) => {
 
         console.log('Database connected.');
     } catch (error) {
-        console.log(error);
+        console.error(error.message);
         process.exit(1);
     }
 }

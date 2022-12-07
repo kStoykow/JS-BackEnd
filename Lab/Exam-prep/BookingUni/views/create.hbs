@@ -1,7 +1,9 @@
 <div id="container">
     <div>
         <div class="notification errorBox">
-            <span>{{error}}</span>
+            {{#each error}}
+            <span>{{this}}</span>
+            {{/each}}
         </div>
     </div>
 

@@ -1,4 +1,10 @@
 <section id="viewLogin">
+    <div class="notification errorBox">
+        {{#each error}}
+        <span>{{this}}</span>
+        {{/each}}
+    </div>
+
     <h2>Login:</h2>
     <form id="formLogin" action="/user/login" method="post">
         <label for="username">Username:</label>

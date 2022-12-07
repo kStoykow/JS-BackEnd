@@ -1,5 +1,11 @@
 <div id="container">
 
+    <div class="notification errorBox">
+        {{#each error}}
+        <span>{{this}}</span>
+        {{/each}}
+    </div>
+    
     <section id="viewhotelDetails">
         <div class="profile"><img src="../static/img/profile.png" alt="default user">
             <h3>User Info:</h3>
