@@ -2,10 +2,19 @@ const { createCube } = require('../services/cubeService');
 
 const createController = require('express').Router();
 
-createController.get('/', async (req, res) => {
-    const cubeData = { name: 'qwe', description: 'qweewe', imageUrl: 'asd', difficultyLevel: 4 };
-    await createCube(cubeData);
-    res.render('create');
+createController.get('/', async (req, res) => res.render('create'));
+
+createController.post('/', async (req, res) => {
+    const cubeData = {
+        name: req.body.name,
+        description: req.body.description,
+        imageUrl: req.body.imageUrl,
+        difficulty: Number(req.body.difficultyLevel),
+    }
+
+    console.log(cubeData);
+    const cube = await createCube(cubeData);
+    res.redirect('/details/' + cube._id);
 });
 
 module.exports = createController;

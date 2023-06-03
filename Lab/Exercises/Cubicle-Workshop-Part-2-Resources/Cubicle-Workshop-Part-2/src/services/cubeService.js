@@ -5,10 +5,15 @@ async function createCube(data) {
 }
 
 async function findCubes() {
-    return Cube.find();
+    return Cube.find().lean();
+}
+
+async function detailsCube(id) {
+    return Cube.findById(id).lean();
 }
 
 module.exports = {
     createCube,
-    findCubes
+    findCubes,
+    detailsCube
 }
