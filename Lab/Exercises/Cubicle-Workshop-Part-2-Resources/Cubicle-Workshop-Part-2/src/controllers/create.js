@@ -12,7 +12,6 @@ createController.post('/', async (req, res) => {
         difficulty: Number(req.body.difficultyLevel),
     }
 
-    console.log(cubeData);
     const cube = await createCube(cubeData);
     res.redirect('/details/' + cube._id);
 });
