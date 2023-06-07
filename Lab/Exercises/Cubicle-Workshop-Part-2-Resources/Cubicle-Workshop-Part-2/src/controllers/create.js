@@ -9,7 +9,7 @@ createController.post('/', async (req, res) => {
         name: req.body.name,
         description: req.body.description,
         imageUrl: req.body.imageUrl,
-        difficulty: Number(req.body.difficultyLevel),
+        difficulty: Number(req.body.difficulty),
     }
 
     const cube = await createCube(cubeData);

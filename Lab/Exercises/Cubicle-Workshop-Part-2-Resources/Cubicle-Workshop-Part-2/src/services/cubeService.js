@@ -1,8 +1,7 @@
 const Cube = require('../models/Cube');
 
 async function createCube(data) {
-    const cube = await Cube.create(data);
-    return cube;
+    return await Cube.create(data);
 }
 
 async function findCubes() {
