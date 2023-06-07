@@ -1,4 +1,5 @@
 const Cube = require('../models/Cube');
+const Accessory = require('../models/Accessory');
 
 async function createCube(data) {
     return await Cube.create(data);
@@ -9,7 +10,7 @@ async function findCubes() {
 }
 
 async function detailsCube(id) {
-    return Cube.findById(id).lean();
+    return Cube.findById(id).populate('accessories').lean();
 }
 
 module.exports = {
