@@ -4,8 +4,16 @@ async function createCube(data) {
     return await Cube.create(data);
 }
 
-async function findCubes() {
-    return Cube.find().lean();
+async function findCubes(name, from, to) {
+    if (!from) {
+        from = 1;
+    }
+    if (!to) {
+        to = 6;
+    }
+
+    const regex = new RegExp(name, 'gim');
+    return Cube.find({ name: regex, difficulty: { $gte: from, $lte: to } }).lean();
 }
 
 async function findCubeById(id) {
