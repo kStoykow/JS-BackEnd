@@ -1,9 +1,21 @@
 const { findCubeById } = require('../services/cubeService');
-const { getAvailableAccessories, attachAccessory } = require('../services/accessoryService');
+const { getAvailableAccessories, attachAccessory, createAccessory } = require('../services/accessoryService');
 
 const accessoryController = require('express').Router();
 
 accessoryController.get('/create', (req, res) => res.render('createAccessory'));
+
+accessoryController.post('/create', async (req, res) => {
+    const accessoryData = {
+        name: req.body.name,
+        description: req.body.description,
+        imageUrl: req.body.imageUrl,
+    }
+
+    await createAccessory(accessoryData);
+    res.redirect('/');
+});
+
 
 accessoryController.get('/attach/:id', async (req, res) => {
     const cube = await findCubeById(req.params.id);

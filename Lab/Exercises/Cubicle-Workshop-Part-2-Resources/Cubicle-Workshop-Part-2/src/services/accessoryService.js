@@ -12,7 +12,12 @@ async function attachAccessory(cubeId, accessoryId) {
     await cube.save();
 }
 
+async function createAccessory(data) {
+    return Accessory.create(data);
+}
+
 module.exports = {
     getAvailableAccessories,
-    attachAccessory
+    attachAccessory,
+    createAccessory
 }
