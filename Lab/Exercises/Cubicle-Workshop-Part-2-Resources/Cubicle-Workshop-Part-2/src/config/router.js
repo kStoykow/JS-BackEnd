@@ -9,6 +9,7 @@ const loginController = require('../controllers/login');
 const registerController = require('../controllers/register');
 const deleteController = require('../controllers/delete');
 const editController = require('../controllers/edit');
+const logoutController = require('../controllers/logout');
 
 
 
@@ -23,6 +24,7 @@ module.exports = (app) => {
     app.use('/edit', editController);
     app.use('/register', registerController);
     app.use('/login', loginController);
+    app.use('/logout', logoutController);
 
     app.use('*', defaultController);
 }

@@ -1,8 +1,8 @@
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const secretKey = 'mySecretKey';
 
-const { secretKey } = require('../config/express');
 
 
 async function register(username, password) {
@@ -29,24 +29,24 @@ async function login(username, password) {
     }
 }
 
-async function logout() {
-
-}
-
 async function verifyToken(req, res, tokenData) {
     try {
         const token = jwt.verify(tokenData, secretKey);
-
         res.cookie('user', tokenData);
         req.user = token;
     } catch (error) {
-        console.log('expired token');
+        logout(req, res);
     }
+}
+
+async function logout(req, res) {
+    res.clearCookie('user');
 }
 
 module.exports = {
     register,
     login,
     logout,
-    verifyToken
+    verifyToken,
+    secretKey
 }
