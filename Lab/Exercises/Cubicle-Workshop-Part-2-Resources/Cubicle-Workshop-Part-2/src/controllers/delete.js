@@ -1,6 +1,6 @@
 const deleteController = require('express').Router();
 
-const { findCubeById } = require('../services/cubeService');
+const { findCubeById, deleteCube } = require('../services/cubeService');
 
 deleteController.get('/:cubeId', async (req, res) => {
     const cube = await findCubeById(req.params.cubeId);
@@ -14,7 +14,12 @@ deleteController.get('/:cubeId', async (req, res) => {
     }
 
     const difficultyString = difficultyMap[cube.difficulty];
-    res.render('deleteCube', { cube, difficulty: difficultyString,user: req.user });
+    res.render('deleteCube', { cube, difficulty: difficultyString, user: req.user });
+});
+
+deleteController.post('/:cubeId', async (req, res) => {
+    await deleteCube(req.params.cubeId);
+    res.redirect('/');
 });
 
 module.exports = deleteController;

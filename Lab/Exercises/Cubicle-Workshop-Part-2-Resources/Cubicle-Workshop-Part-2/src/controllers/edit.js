@@ -1,11 +1,17 @@
-const deleteController = require('express').Router();
+const editController = require('express').Router();
 
-const { findCubeById } = require('../services/cubeService');
+const { findCubeById, editCube } = require('../services/cubeService');
 
-deleteController.get('/:cubeId', async (req, res) => {
+editController.get('/:cubeId', async (req, res) => {
     const cube = await findCubeById(req.params.cubeId);
 
-    res.render('editCube', { cube,user: req.user });
+    res.render('editCube', { cube, user: req.user });
 });
 
-module.exports = deleteController;
+editController.post('/:cubeId', async (req, res) => {
+    await editCube(req.params.cubeId, req.body);
+
+    res.redirect(`/details/${req.params.cubeId}`);
+});
+
+module.exports = editController;

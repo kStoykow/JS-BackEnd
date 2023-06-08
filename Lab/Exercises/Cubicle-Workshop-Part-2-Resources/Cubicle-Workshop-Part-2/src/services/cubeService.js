@@ -20,8 +20,23 @@ async function findCubeById(id) {
     return Cube.findById(id).populate('accessories').lean();
 }
 
+const editCube = async function (cubeId, data) {
+    const cube = await Cube.findById(cubeId);
+    for (const key in cube) {
+        if (data.hasOwnProperty(key))
+            cube[key] = data[key];
+    }
+
+    await cube.save();
+}
+const deleteCube = async function (cubeId) {
+    await Cube.findByIdAndDelete(cubeId);
+}
+
 module.exports = {
     createCube,
     findCubes,
     findCubeById,
+    editCube,
+    deleteCube
 }
