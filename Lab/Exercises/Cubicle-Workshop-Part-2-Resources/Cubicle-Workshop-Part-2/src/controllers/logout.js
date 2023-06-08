@@ -1,7 +1,9 @@
+const { logout } = require('../services/userService');
+
 const logoutController = require('express').Router();
 
 logoutController.get('/', async (req, res) => {
-    res.clearCookie('user');
+    logout(req, res);
     res.redirect('/');
 });
 

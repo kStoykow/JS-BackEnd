@@ -14,7 +14,7 @@ deleteController.get('/:cubeId', async (req, res) => {
     }
 
     const difficultyString = difficultyMap[cube.difficulty];
-    res.render('deleteCube', { cube, difficulty: difficultyString });
+    res.render('deleteCube', { cube, difficulty: difficultyString,user: req.user });
 });
 
 module.exports = deleteController;

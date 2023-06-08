@@ -5,9 +5,8 @@ const homeController = require('express').Router();
 homeController.get('/', async (req, res) => {
 
     const { search, from, to } = req.query;
-    console.log(req.cookies);
     const cubes = await findCubes(search, from, to);
-    res.render('home', { cubes, search, from, to });
+    res.render('home', { cubes, user: req.user, search, from, to });
 });
 
 module.exports = homeController;

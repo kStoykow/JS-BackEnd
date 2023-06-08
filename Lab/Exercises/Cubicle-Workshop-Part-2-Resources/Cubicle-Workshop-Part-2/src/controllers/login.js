@@ -1,4 +1,4 @@
-const { login, verifyToken } = require('../services/userService');
+const { login, attachToken } = require('../services/userService');
 
 const loginController = require('express').Router();
 
@@ -9,13 +9,11 @@ loginController.post('/', async (req, res) => {
 
     try {
         const tokenData = await login(username, password);
-        await verifyToken(req, res, tokenData);
-
+        await attachToken(req, res, tokenData);
         res.redirect('/');
 
     } catch (error) {
-        console.log(error);
-        res.render('login');
+        res.render('login', { user: req.user });
     }
 });
 

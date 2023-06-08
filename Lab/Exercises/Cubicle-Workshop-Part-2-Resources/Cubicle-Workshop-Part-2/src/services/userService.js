@@ -29,14 +29,11 @@ async function login(username, password) {
     }
 }
 
-async function verifyToken(req, res, tokenData) {
-    try {
-        const token = jwt.verify(tokenData, secretKey);
-        res.cookie('user', tokenData);
-        req.user = token;
-    } catch (error) {
-        logout(req, res);
-    }
+async function attachToken(req, res, tokenData) {
+    const token = jwt.verify(tokenData, secretKey);
+    res.cookie('user', tokenData);
+    req.user = token;
+    return token;
 }
 
 async function logout(req, res) {
@@ -47,6 +44,6 @@ module.exports = {
     register,
     login,
     logout,
-    verifyToken,
+    attachToken,
     secretKey
 }

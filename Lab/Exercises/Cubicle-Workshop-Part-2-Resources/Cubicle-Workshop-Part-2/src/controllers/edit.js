@@ -5,7 +5,7 @@ const { findCubeById } = require('../services/cubeService');
 deleteController.get('/:cubeId', async (req, res) => {
     const cube = await findCubeById(req.params.cubeId);
 
-    res.render('editCube', { cube });
+    res.render('editCube', { cube,user: req.user });
 });
 
 module.exports = deleteController;

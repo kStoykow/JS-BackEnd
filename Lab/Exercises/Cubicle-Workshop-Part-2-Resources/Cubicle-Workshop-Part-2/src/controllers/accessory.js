@@ -3,7 +3,7 @@ const { getAvailableAccessories, attachAccessory, createAccessory } = require('.
 
 const accessoryController = require('express').Router();
 
-accessoryController.get('/create', (req, res) => res.render('createAccessory'));
+accessoryController.get('/create', (req, res) => res.render('createAccessory',{user: req.user}));
 
 accessoryController.post('/create', async (req, res) => {
     const accessoryData = {
@@ -21,7 +21,7 @@ accessoryController.get('/attach/:id', async (req, res) => {
     const cube = await findCubeById(req.params.id);
     const accessories = await getAvailableAccessories(cube);
 
-    res.render('attachAccessory', { cube, accessories });
+    res.render('attachAccessory', { cube, accessories,user: req.user });
 });
 
 accessoryController.post('/attach/:id', async (req, res) => {

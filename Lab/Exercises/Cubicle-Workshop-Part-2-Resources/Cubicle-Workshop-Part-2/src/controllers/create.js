@@ -2,7 +2,7 @@ const { createCube } = require('../services/cubeService');
 
 const createController = require('express').Router();
 
-createController.get('/', async (req, res) => res.render('create'));
+createController.get('/', async (req, res) => res.render('create',{user: req.user}));
 
 createController.post('/', async (req, res) => {
     const cubeData = {
