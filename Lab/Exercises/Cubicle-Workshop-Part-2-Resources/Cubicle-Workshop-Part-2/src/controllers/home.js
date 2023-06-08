@@ -1,12 +1,20 @@
 const { findCubes } = require('../services/cubeService');
+const { verifyToken } = require('../services/userService');
 
 const homeController = require('express').Router();
 
 homeController.get('/', async (req, res) => {
-    const { search, from, to } = req.query;
+    try {
+        await verifyToken(req, res, req.cookies.user);
 
-    const cubes = await findCubes(search, from, to);
-    res.render('home', { cubes, search, from, to });
+        const { search, from, to } = req.query;
+
+        const cubes = await findCubes(search, from, to);
+        res.render('home', { cubes, search, from, to });
+
+    } catch (err) {
+        res.redirect('/'); //logout
+    }
 });
 
 module.exports = homeController;

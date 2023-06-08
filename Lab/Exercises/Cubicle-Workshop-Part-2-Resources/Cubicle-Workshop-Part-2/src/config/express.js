@@ -3,7 +3,9 @@ const handlebars = require('express-handlebars');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 
-module.exports = (app) => {
+const secretKey = 'mySecretKey';
+
+function expressConfig(app) {
     //express + handlebars
     const hbs = handlebars.create({ extname: '.hbs' });
     app.engine('hbs', hbs.engine);
@@ -18,4 +20,8 @@ module.exports = (app) => {
 
     //cookie-parser
     app.use(cookieParser());
+}
+module.exports = {
+    expressConfig,
+    secretKey
 }
