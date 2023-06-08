@@ -2,9 +2,6 @@ const { logout } = require('../services/userService');
 
 const logoutController = require('express').Router();
 
-logoutController.get('/', async (req, res) => {
-    logout(req, res);
-    res.redirect('/');
-});
+logoutController.get('/', (req, res) => logout(req, res).then(() => res.redirect('/')));
 
 module.exports = logoutController;
