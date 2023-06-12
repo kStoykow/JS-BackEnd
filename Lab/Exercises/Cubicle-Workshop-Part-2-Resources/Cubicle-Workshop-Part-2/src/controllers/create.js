@@ -6,7 +6,7 @@ const createController = require('express').Router();
 createController.get('/', isUser, async (req, res) => res.render('create', { user: req.user }));
 
 createController.post('/', isUser, async (req, res) => {
-    console.log(req.user);
+
     const cubeData = {
         name: req.body.name,
         description: req.body.description,

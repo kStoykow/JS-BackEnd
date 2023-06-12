@@ -4,7 +4,9 @@ const detailsController = require('express').Router();
 
 detailsController.get('/:cubeId', async (req, res) => {
     const cube = await findCubeById(req.params.cubeId);
-    res.render('details', { cube ,user: req.user});
+    const isOwner = req.user.id == cube.creatorId;
+
+    res.render('details', { cube, user: req.user, isOwner });
 });
 
 module.exports = detailsController;

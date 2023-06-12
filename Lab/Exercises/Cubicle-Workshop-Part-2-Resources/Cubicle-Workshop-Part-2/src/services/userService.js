@@ -17,7 +17,7 @@ async function login(username, password) {
         const isAuthenticated = await bcrypt.compare(password, user.password);
 
         if (isAuthenticated) {
-            const payload = { username: user.username, id: user._id };
+            const payload = { username: user.username, id: user._id, cubes: user.cubes };
             const token = jwt.sign(payload, secretKey);
             return token;
         }
