@@ -1,7 +1,10 @@
-const { logout } = require('../services/userService');
+const isUser = require('../middleware/isUserGuard');
 
 const logoutController = require('express').Router();
 
-logoutController.get('/', (req, res) => logout(req, res).then(() => res.redirect('/')));
+logoutController.get('/', isUser, (req, res) => {
+    res.clearCookie('user');
+    res.redirect('/');
+});
 
 module.exports = logoutController;

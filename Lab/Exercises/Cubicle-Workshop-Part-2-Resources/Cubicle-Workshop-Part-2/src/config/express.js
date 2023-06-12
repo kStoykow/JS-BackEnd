@@ -20,8 +20,7 @@ function expressConfig(app) {
 
     //cookie-parser
     app.use(cookieParser());
-
-    app.use(verifyToken)
+    app.use(verifyToken);
 }
 module.exports = {
     expressConfig,

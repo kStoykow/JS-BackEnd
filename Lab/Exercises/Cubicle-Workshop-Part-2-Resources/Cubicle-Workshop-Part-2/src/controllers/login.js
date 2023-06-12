@@ -1,10 +1,11 @@
+const isGuest = require('../middleware/isGUestGuard');
 const { login, attachToken } = require('../services/userService');
 
 const loginController = require('express').Router();
 
-loginController.get('/', async (req, res) => res.render('login'));
+loginController.get('/', isGuest, async (req, res) => res.render('login'));
 
-loginController.post('/', async (req, res) => {
+loginController.post('/', isGuest, async (req, res) => {
     const { username, password } = req.body;
 
     try {

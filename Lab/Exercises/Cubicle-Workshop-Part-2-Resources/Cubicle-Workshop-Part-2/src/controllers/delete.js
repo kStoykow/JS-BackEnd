@@ -1,8 +1,9 @@
 const deleteController = require('express').Router();
 
+const isUser = require('../middleware/isUserGuard');
 const { findCubeById, deleteCube } = require('../services/cubeService');
 
-deleteController.get('/:cubeId', async (req, res) => {
+deleteController.get('/:cubeId', isUser, async (req, res) => {
     const cube = await findCubeById(req.params.cubeId);
     const difficultyMap = {
         '1': `1 - Very Easy`,
@@ -17,7 +18,7 @@ deleteController.get('/:cubeId', async (req, res) => {
     res.render('deleteCube', { cube, difficulty: difficultyString, user: req.user });
 });
 
-deleteController.post('/:cubeId', async (req, res) => {
+deleteController.post('/:cubeId', isUser, async (req, res) => {
     await deleteCube(req.params.cubeId);
     res.redirect('/');
 });
