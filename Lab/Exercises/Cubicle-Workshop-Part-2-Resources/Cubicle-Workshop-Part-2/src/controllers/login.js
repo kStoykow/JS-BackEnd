@@ -14,7 +14,7 @@ loginController.post('/', isGuest, async (req, res) => {
         res.redirect('/');
 
     } catch (error) {
-        res.render('login', { user: req.user });
+        res.render('login', { user: req.user, error });
     }
 });
 

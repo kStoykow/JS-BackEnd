@@ -6,8 +6,17 @@ const secretKey = 'mySecretKey';
 
 
 async function register(username, password) {
-    const pass = await bcrypt.hash(password, 10);
-    await User.create({ username, password: pass });
+    try {
+        const isTaken = await User.findOne({ username });
+        if (isTaken) {
+            throw 'Username already taken.';
+        }
+        const pass = await bcrypt.hash(password, 10);
+        await User.create({ username, password: pass });
+
+    } catch (error) {
+        throw error;
+    }
 }
 
 async function login(username, password) {

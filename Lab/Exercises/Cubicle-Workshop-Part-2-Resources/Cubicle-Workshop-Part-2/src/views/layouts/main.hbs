@@ -26,6 +26,12 @@
             </ul>
         </header>
         <main>
+            {{#if error}}
+            <div>
+                <p><span class="error">{{error}}</span></p>
+            </div>
+            {{/if}}
+
             {{{body}}}
         </main>
     </div>
