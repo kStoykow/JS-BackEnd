@@ -1,7 +1,11 @@
 const Cube = require('../models/Cube');
 
 async function createCube(data) {
-    return await Cube.create(data);
+    try {
+        return Cube.create(data);
+    } catch (error) {
+        throw 'Something went wrong. Please try again later.';
+    }
 }
 
 async function findCubes(name, from, to) {
@@ -13,21 +17,36 @@ async function findCubes(name, from, to) {
     }
 
     const regex = new RegExp(name, 'gim');
-    return Cube.find({ name: regex, difficulty: { $gte: from, $lte: to } }).lean();
+
+    try {
+        return await Cube.find({ name: regex, difficulty: { $gte: from, $lte: to } }).lean();
+    } catch (error) {
+        throw 'Something went wrong. Please try again later.';
+    }
 }
 
 async function findCubeById(id) {
-    return Cube.findById(id).populate('accessories').lean();
+    try {
+        return await Cube.findById(id).populate('accessories').lean();
+
+    } catch (error) {
+        throw 'Something went wrong. Please try again later.';
+    }
 }
 
 const editCube = async function (cubeId, data) {
-    const cube = await Cube.findById(cubeId);
-    for (const key in cube) {
-        if (data.hasOwnProperty(key))
-            cube[key] = data[key];
-    }
+    try {
+        const cube = await Cube.findById(cubeId);
+        for (const key in cube) {
+            if (data.hasOwnProperty(key))
+                cube[key] = data[key];
+        }
 
-    await cube.save();
+        await cube.save();
+
+    } catch (error) {
+        throw 'Something went wrong. Please try again later.';
+    }
 }
 const deleteCube = async function (cubeId) {
     await Cube.findByIdAndDelete(cubeId);

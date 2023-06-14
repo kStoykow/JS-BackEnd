@@ -1,7 +1,9 @@
 const editController = require('express').Router();
+
 const isUser = require('../middleware/isUserGuard');
 
 const { findCubeById, editCube } = require('../services/cubeService');
+const errorParser = require('../util/errorParser');
 
 editController.get('/:cubeId', isUser, async (req, res) => {
     try {
@@ -15,15 +17,19 @@ editController.get('/:cubeId', isUser, async (req, res) => {
         res.redirect('/');
 
     } catch (error) {
-        res.redirect('/404');
+        res.render('404', {user: req.user, error: errorParser(error) });
     }
 
 });
 
 editController.post('/:cubeId', isUser, async (req, res) => {
-    await editCube(req.params.cubeId, req.body);
+    try {
+        await editCube(req.params.cubeId, req.body);
 
-    res.redirect(`/details/${req.params.cubeId}`);
+        res.redirect(`/details/${req.params.cubeId}`);
+    } catch (error) {
+        res.render('404', {user: req.user, error: errorParser(error) });
+    }
 });
 
 module.exports = editController;

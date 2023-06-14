@@ -31,8 +31,6 @@ async function login(username, password) {
             return token;
         }
 
-        throw 'Wrong username or password.';
-
     } catch (error) {
         throw 'Wrong username or password.';
     }

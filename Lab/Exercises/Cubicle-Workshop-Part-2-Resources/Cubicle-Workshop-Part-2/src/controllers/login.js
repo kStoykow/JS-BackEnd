@@ -1,5 +1,6 @@
 const isGuest = require('../middleware/isGUestGuard');
 const { login, attachToken } = require('../services/userService');
+const errorParser = require('../util/errorParser');
 
 const loginController = require('express').Router();
 
@@ -14,7 +15,7 @@ loginController.post('/', isGuest, async (req, res) => {
         res.redirect('/');
 
     } catch (error) {
-        res.render('login', { user: req.user, error });
+        res.render('login', { user: req.user, error: errorParser(error) });
     }
 });
 
