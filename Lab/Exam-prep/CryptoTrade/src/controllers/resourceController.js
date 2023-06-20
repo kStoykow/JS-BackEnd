@@ -44,6 +44,7 @@ resourceController.get('/:id/delete', isUser, async (req, res) => {
 
     }
 });
+
 resourceController.post('/:id/delete', isUser, async (req, res) => {
     try {
 
