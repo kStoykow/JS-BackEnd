@@ -6,9 +6,10 @@ const resourceSchema = new Schema({
     price: { type: Number, required: [true, 'Price is required.'] },
     paymentMethod: { type: String, enum: ['crypto-wallet', 'credit-card', 'debit-card', 'paypal'] },
     description: { type: String, required: true, /*maxLength: [50, 'Description maximum length is 50.'] */ },
+    buyers: { type: [Schema.Types.ObjectId], ref: 'User' },
     creatorId: { type: Schema.Types.ObjectId, ref: 'User' },
 });
 
-const Resource = model('Resource', resourceSchema);
+const Crypto = model('Resource', resourceSchema);
 
-module.exports = Resource;
+module.exports = Crypto;

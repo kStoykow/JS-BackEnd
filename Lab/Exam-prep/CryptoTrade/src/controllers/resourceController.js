@@ -2,6 +2,7 @@ const resourceController = require('express').Router();
 const errorParser = require('../util/errorParser');
 
 const isUser = require('../middlewares/isUser');
+const { findAll } = require('../services/resourceService');
 //TODO:CHECK GUARDS
 //TODO:CHECK GUARDS
 //TODO: check if populating fields on wrong validation
@@ -19,7 +20,9 @@ resourceController.post('/create', isUser, async (req, res) => {
 
 
 resourceController.get('/catalog', async (req, res) => {
-    res.render('catalog', { user: req.user });
+    // const coins = await findAll();
+    const coins = [{ name: 'asd', price: 24, description: 'SecurityPolicyViolationEvent', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHZAq08u4YaR0Jsu2CgeptdxC74y-9QEeFYEAb6YHP&s', paymentMethod: 'credit-card', _id: '52' }];
+    res.render('catalog', { user: req.user, coins });
 });
 
 
@@ -30,7 +33,7 @@ resourceController.get('/search', async (req, res) => {
 
 resourceController.get('/:id/details', async (req, res) => {
     try {
-
+        res.render('details', { user: req.user })
     } catch (error) {
 
     }
