@@ -9,18 +9,19 @@ const findUserById = async (id) => {
     return User.findById(id);
 }
 
-const register = async (username, password) => {
-    const user = await User.findOne({ username });
-    if (user) {
+const register = async (username, email, password) => {
+    const isUsername = await User.findOne({ username });
+    const isEmail = await User.findOne({ email });
+    if (isUsername || isEmail) {
         throw 'User already exists.';
     }
 
     const hashPass = await bcrypt.hash(password, 10);
-    return await User.create({ username, password: hashPass });
+    return await User.create({ username, email, password: hashPass });
 }
 
-const login = async (username, password) => {
-    const user = await User.findOne({ username });
+const login = async (email, password) => {
+    const user = await User.findOne({ email });
     if (!user) {
         throw 'Username or password dont match.';
     }
@@ -28,7 +29,7 @@ const login = async (username, password) => {
     const isMatch = await bcrypt.compare(password, user.password);
 
     if (isMatch) {
-        const payload = { username, _id: user._id };
+        const payload = { username: user.username, email: user.email, _id: user._id };
         const token = jwt.sign(payload, SECRET);
         return token;
     } else {

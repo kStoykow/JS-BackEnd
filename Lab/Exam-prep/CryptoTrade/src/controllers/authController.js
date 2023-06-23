@@ -9,32 +9,37 @@ const { register, login, verifyToken } = require('../services/userService'); //d
 
 authController.get('/login', isGuest, (req, res) => res.render('login', { user: req.user }));
 authController.post('/login', isGuest, async (req, res) => {
-    const { username, password } = req.body; //TODO: check if email
+    const { email, password } = req.body; //TODO: check if email
 
     try {
-        const token = await login(username, password);
+        const token = await login(email, password);
+        console.log(token);
         res.cookie('user', token);
         res.redirect('/'); //TODO: check redirect
     } catch (error) {
+        console.log(error);
         res.render('login', { user: req.user, body: req.body, error: errorParser(error) }); //TODO: check if populating form
     }
 });
 
 authController.get('/register', isGuest, (req, res) => res.render('register', { user: req.user }));
 authController.post('/register', isGuest, async (req, res) => {
-    const { username, password, repeatPassword } = req.body;
+    const { username, email, password, repeatPassword } = req.body;
 
     try {
         if (!username) {
             throw 'Username is required.';
         }
+        if (!email) {
+            throw 'Email is required.';
+        }
         if (!password || (password !== repeatPassword)) {
             throw 'Password missmatch.'
         }
 
-        const user = await register(username, password);
+        const user = await register(username, email, password);
 
-        res.redirect('/user/login'); //TODO: check redirect OR login instant
+        res.redirect('/'); //TODO: check redirect OR login instant
 
         // const token = verifyToken(user);
         // res.cookie('user', token);
