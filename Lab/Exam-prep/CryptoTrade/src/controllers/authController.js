@@ -34,7 +34,9 @@ authController.post('/register', isGuest, async (req, res) => {
         if (!password || (password !== repeatPassword)) {
             throw 'Password missmatch.'
         }
-
+        if (password.length < 4) {
+            throw 'Password must be atleast 4 characters long.';
+        }
         const user = await register(username, email, password);
 
         res.redirect('/'); //TODO: check redirect OR login instant
