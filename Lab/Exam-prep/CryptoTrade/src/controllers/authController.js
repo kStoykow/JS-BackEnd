@@ -13,11 +13,9 @@ authController.post('/login', isGuest, async (req, res) => {
 
     try {
         const token = await login(email, password);
-        console.log(token);
         res.cookie('user', token);
         res.redirect('/'); //TODO: check redirect
     } catch (error) {
-        console.log(error);
         res.render('login', { user: req.user, body: req.body, error: errorParser(error) }); //TODO: check if populating form
     }
 });
