@@ -32,7 +32,27 @@ resourceController.get('/catalog', async (req, res) => {
 
 
 resourceController.get('/search', async (req, res) => {
-    res.render('search', { user: req.user });
+    let coins = await findAll();
+    const optionsMap = [
+        { value: 'crypto-wallet', text: 'Crypto Wallet' },
+        { value: 'credit-card', text: 'Credit Card' },
+        { value: 'debit-card', text: 'Debit Card' },
+        { value: 'paypal', text: 'PayPal' },
+    ]
+
+    let { search, payment } = req.query;
+
+    const options = optionsMap.map(e => payment == e.value ? { ...e, selected: true } : e);
+
+    if (search) {
+        coins = coins.filter(e => e.name.toLocaleLowerCase().includes(search.toLocaleLowerCase()));
+    }
+
+    if (payment) {
+        coins = coins.filter(e => e.paymentMethod == payment);
+    }
+
+    res.render('search', { user: req.user, coins, search, options });
 });
 
 
