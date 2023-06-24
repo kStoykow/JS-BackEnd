@@ -13,8 +13,8 @@ const findResourceById = async (id) => {
 }
 
 
-const editResource = (resourceId, data) => {
-    return Resource.findOneAndUpdate(resourceId, data);
+const editResource = async (resourceId, data) => {
+    await Resource.findByIdAndUpdate(resourceId, { ...data });
 }
 
 const deleteResource = async (resourceId) => {

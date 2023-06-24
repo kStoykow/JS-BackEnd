@@ -81,7 +81,7 @@ resourceController.get('/:id/edit', isUser, async (req, res) => {
     ]
 
     const options = optionsMap.map(e => coin.paymentMethod == e.value ? { ...e, selected: true } : e);
-    console.log(options);
+
     if (req.user._id != coin.creatorId) {
         return res.redirect('/');
     }
@@ -102,7 +102,9 @@ resourceController.post('/:id/edit', isUser, async (req, res) => {
     }
 
     try {
-
+        const data = req.body;
+        await editResource(req.params.id, data);
+        res.redirect(`/crypto/${req.params.id}/details`);
     } catch (error) {
         res.render('edit', { user: req.user, body: req.body, error: errorParser(error) });
     }
