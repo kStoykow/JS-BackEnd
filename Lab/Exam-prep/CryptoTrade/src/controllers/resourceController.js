@@ -73,12 +73,22 @@ resourceController.get('/:id/delete', isUser, async (req, res) => {
 
 resourceController.get('/:id/edit', isUser, async (req, res) => {
     const coin = await findResourceById(req.params.id);
+    const optionsMap = [
+        { value: 'crypto-wallet', text: 'Crypto Wallet' },
+        { value: 'credit-card', text: 'Credit Card' },
+        { value: 'debit-card', text: 'Debit Card' },
+        { value: 'paypal', text: 'PayPal' },
+    ]
+
+    const options = optionsMap.map(e => coin.paymentMethod == e.value ? { ...e, selected: true } : e);
+    console.log(options);
     if (req.user._id != coin.creatorId) {
         return res.redirect('/');
     }
 
     try {
-        res.render('edit', { user: req.user });
+        res.render('edit',
+            { user: req.user, coin, options });
     } catch (error) {
 
     }
