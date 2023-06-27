@@ -16,13 +16,12 @@ authController.post('/login', isGuest, async (req, res) => {
         res.cookie('user', token);
         res.redirect('/'); 
     } catch (error) {
-        res.render('login', { user: req.user, body: req.body, error: errorParser(error) }); //TODO: check if populating form
+        res.render('login', { user: req.user, body: req.body, error: errorParser(error) });
     }
 });
 
 authController.get('/register', isGuest, (req, res) => res.render('register', { user: req.user }));
 authController.post('/register', isGuest, async (req, res) => {
-    console.log(req.body);
     const { email, username, password, repeatPassword } = req.body;
 
     try {

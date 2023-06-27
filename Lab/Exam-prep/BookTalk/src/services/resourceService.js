@@ -3,10 +3,10 @@ const Resource = require('../models/Resource');
 //TODO: check if await/return/lean is needed. Fix func if needed.
 
 const createResource = (data) => {
-    return Resource.create(data).lean();
+    return Resource.create(data);
 }
 
-const findAll = () => Resource.find({});
+const findAll = async () => await Resource.find({}).lean();
 
 const findResourceById = (id) => {
     return Resource.findById(id).lean();
