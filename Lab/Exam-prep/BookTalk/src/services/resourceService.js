@@ -1,6 +1,5 @@
 const Resource = require('../models/Resource');
 
-//TODO: check if await/return/lean is needed. Fix func if needed.
 
 const createResource = (data) => {
     return Resource.create(data);
@@ -21,10 +20,13 @@ const deleteResource = (resourceId) => {
     return Resource.findByIdAndDelete(resourceId);
 }
 
+const wishRead = (userId, bookId) => Resource.findByIdAndUpdate(bookId, { $push: { wishList: userId } });
+
 module.exports = {
     createResource,
     findAll,
     findResourceById,
     editResource,
-    deleteResource
+    deleteResource,
+    wishRead
 }

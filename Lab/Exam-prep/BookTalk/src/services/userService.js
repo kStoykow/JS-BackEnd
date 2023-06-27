@@ -20,7 +20,7 @@ const register = async (username, email, password) => {
 }
 
 const login = async (email, password) => {
-    // const user = await User.findOne({ username });
+
     const user = await User.findOne({ email });
     if (!user) {
         throw 'Username or password dont match.';
@@ -37,15 +37,9 @@ const login = async (email, password) => {
     }
 }
 
-//TODO: Delete if not needed
-const verifyToken = (user) => {
-    const payload = { username: user.username, _id: user._id };
-    const token = jwt.sign(payload, SECRET);
-    return token;
-}
 module.exports = {
     register,
     findUserById,
     login,
-    verifyToken // here also
+    
 } 

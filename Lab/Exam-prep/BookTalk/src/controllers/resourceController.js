@@ -2,11 +2,7 @@ const resourceController = require('express').Router();
 const errorParser = require('../util/errorParser');
 
 const isUser = require('../middlewares/isUser');
-const { createResource, findAll, findResourceById, editResource } = require('../services/resourceService');
-//TODO:CHECK GUARDS
-//TODO:CHECK GUARDS
-//TODO: check if populating fields on wrong validation
-//TODO: check if populating fields on wrong validation
+const { createResource, findAll, findResourceById, editResource, deleteResource, wishRead } = require('../services/resourceService');
 
 resourceController.get('/create', isUser, async (req, res) => res.render('create', { user: req.user }));
 
@@ -33,12 +29,19 @@ resourceController.get('/catalog', async (req, res) => {
 });
 
 
+resourceController.get('/:id/wish', async (req, res) => {
+    await wishRead(req.user._id, req.params.id);
+
+    res.redirect(`/books/${req.params.id}/details`);
+});
+
+
 resourceController.get('/:id/details', async (req, res) => {
     try {
         const book = await findResourceById(req.params.id);
         const isOwner = req.user?._id == book.ownerId;
-
-        res.render('details', { user: req.user, book, isOwner })
+        const isWish = book.wishList.some(e => e == req.user?._id);
+        res.render('details', { user: req.user, book, isOwner, isWish })
     } catch (error) {
         res.render('default', { user: req.user })
     }
@@ -46,31 +49,15 @@ resourceController.get('/:id/details', async (req, res) => {
 
 
 resourceController.get('/:id/delete', isUser, async (req, res) => {
-    const resource = await findResourceById(req.params.id);
-
-    if (req.user._id != resource.ownerId) {
-        return res.redirect('/');
-    }
-
-    try {
-
-    } catch (error) {
-
-    }
-});
-
-resourceController.post('/:id/delete', isUser, async (req, res) => {
     const book = await findResourceById(req.params.id);
 
     if (req.user._id != book.ownerId) {
         return res.redirect('/');
     }
 
-    try {
+    await deleteResource(book._id);
+    res.redirect('/books/catalog');
 
-    } catch (error) {
-        res.render('delete', { user: req.user, body: req.body, error: errorParser(error) });
-    }
 });
 
 
@@ -93,7 +80,7 @@ resourceController.post('/:id/edit', isUser, async (req, res) => {
     try {
         const data = req.body;
         await editResource(req.params.id, data);
-         res.redirect(`/books/${req.params.id}/details`);
+        res.redirect(`/books/${req.params.id}/details`);
 
     } catch (error) {
         res.render('edit', { user: req.user, book, error: errorParser(error) });
