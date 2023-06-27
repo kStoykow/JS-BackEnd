@@ -2,7 +2,7 @@ const resourceController = require('express').Router();
 const errorParser = require('../util/errorParser');
 
 const isUser = require('../middlewares/isUser');
-const { createResource, findAll, findResourceById } = require('../services/resourceService');
+const { createResource, findAll, findResourceById, editResource } = require('../services/resourceService');
 //TODO:CHECK GUARDS
 //TODO:CHECK GUARDS
 //TODO: check if populating fields on wrong validation
@@ -40,7 +40,7 @@ resourceController.get('/:id/details', async (req, res) => {
 
         res.render('details', { user: req.user, book, isOwner })
     } catch (error) {
-
+        res.render('default', { user: req.user })
     }
 });
 
@@ -80,12 +80,7 @@ resourceController.get('/:id/edit', isUser, async (req, res) => {
     if (req.user._id != book.ownerId) {
         return res.redirect('/');
     }
-
-    try {
-        res.render('edit', { user: req.user, book })
-    } catch (error) {
-
-    }
+    res.render('edit', { user: req.user, book })
 });
 
 resourceController.post('/:id/edit', isUser, async (req, res) => {
@@ -96,10 +91,12 @@ resourceController.post('/:id/edit', isUser, async (req, res) => {
     }
 
     try {
-
+        const data = req.body;
+        await editResource(req.params.id, data);
+         res.redirect(`/books/${req.params.id}/details`);
 
     } catch (error) {
-        res.render('edit', { user: req.user, body: req.body, error: errorParser(error) });
+        res.render('edit', { user: req.user, book, error: errorParser(error) });
     }
 });
 
