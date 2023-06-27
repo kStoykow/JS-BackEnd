@@ -7,7 +7,7 @@
                 <img
                     src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvPnjeYyAvdnoC_gdZYcJJK_f9f8jZoieK1-JG4YLc3SES_JeHlBbhDEtlyiA2atnl2W0&usqp=CAU">
             </div>
-            <div class="email">jennifer23@gmail.com</div>
+            <div class="email">{{user.email}}</div>
         </div>
 
         <div class="bottom-section">
@@ -21,9 +21,9 @@
         </div>
     </div>
     <div class="wish-books">
-        {{#if wished}}
+        {{#if books}}
         <!--If there are wished books-->
-        {{#each wished}}
+        {{#each books}}
         <div class="book">
             <div class="info-container-profile">
                 <img src="{{imageUrl}}">
@@ -34,14 +34,6 @@
         </div>
         {{/each}}
 
-        <div class="book">
-            <div class="info-container-profile">
-                <img src="./image/Unsettled-ground.jpeg">
-            </div>
-            <div class="details-btn">
-                <a href="#" class="details">Details</a>
-            </div>
-        </div>
         {{else}}
         <!--If there are no wished books-->
         <h2 class="no-record-in-profile">There are no book reviews found yet...</h2>
