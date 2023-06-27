@@ -3,18 +3,18 @@ const authController = require('express').Router();
 const errorParser = require('../util/errorParser');
 const isGuest = require('../middlewares/isGuest');
 const isUser = require('../middlewares/isUser');
-const { register, login, verifyToken } = require('../services/userService'); //delete ref if not used
+const { register, login } = require('../services/userService');
 
 //TODO: check guards
 
 authController.get('/login', isGuest, (req, res) => res.render('login', { user: req.user }));
 authController.post('/login', isGuest, async (req, res) => {
-    const { username, email, password } = req.body; //TODO: check if email
+    const { email, password } = req.body;
 
     try {
-        const token = await login(username, email, password);
+        const token = await login(email, password);
         res.cookie('user', token);
-        res.redirect('/'); //TODO: check redirect
+        res.redirect('/'); 
     } catch (error) {
         res.render('login', { user: req.user, body: req.body, error: errorParser(error) }); //TODO: check if populating form
     }
@@ -22,7 +22,8 @@ authController.post('/login', isGuest, async (req, res) => {
 
 authController.get('/register', isGuest, (req, res) => res.render('register', { user: req.user }));
 authController.post('/register', isGuest, async (req, res) => {
-    const { username, email, password, repeatPassword } = req.body;
+    console.log(req.body);
+    const { email, username, password, repeatPassword } = req.body;
 
     try {
         if (!username) {
@@ -35,16 +36,21 @@ authController.post('/register', isGuest, async (req, res) => {
             throw 'Password missmatch.'
         }
 
-        const user = await register(username,email, password);
+        const user = await register(username, email, password);
 
-        res.redirect('/user/login'); //TODO: check redirect OR login instant
-
-        // const token = verifyToken(user);
-        // res.cookie('user', token);
-        // res.redirect('/');
+        res.redirect('/');
 
     } catch (error) {
         res.render('register', { user: req.user, body: req.body, error: errorParser(error) });
+    }
+});
+
+authController.get('/profile', (req, res) => {
+    try {
+        res.render('profile');
+    } catch (error) {
+        res.render('register', { user: req.user, error: errorParser(error) });
+
     }
 });
 

@@ -16,12 +16,12 @@ const register = async (username, email, password) => {
         throw 'User already exists.';
     }
     const hashPass = await bcrypt.hash(password, 10);
-    return await User.create({ username, password: hashPass });
+    return await User.create({ username, email, password: hashPass });
 }
 
-const login = async (username, email, password) => {
-    const user = await User.findOne({ username });
-    // const user = await User.findOne({ email });
+const login = async (email, password) => {
+    // const user = await User.findOne({ username });
+    const user = await User.findOne({ email });
     if (!user) {
         throw 'Username or password dont match.';
     }
