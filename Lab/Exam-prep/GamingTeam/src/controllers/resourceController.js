@@ -14,7 +14,7 @@ resourceController.post('/create', isUser, async (req, res) => {
     try {
         const { platform, name, imageUrl, price, genre, description } = req.body;
 
-        await createResource({ platform, name, imageUrl, price, genre, description });
+        await createResource({ platform, name, imageUrl, price, genre, description, creatorId: req.user._id });
         res.redirect('/games/catalog');
     } catch (error) {
         res.render('create', { user: req.user, body: req.body, error: errorParser(error) });
@@ -37,7 +37,7 @@ resourceController.get('/:id/details', async (req, res) => {
         const game = await findResourceById(req.params.id);
         const isOwner = req.user?._id == game.creatorId;
 
-        res.render('details', { user: req.user, game });
+        res.render('details', { user: req.user, isOwner, game });
     } catch (error) {
         res.render('default', { user: req.user });
     }
@@ -45,14 +45,15 @@ resourceController.get('/:id/details', async (req, res) => {
 
 
 resourceController.get('/:id/delete', isUser, async (req, res) => {
-    const resource = await findResourceById(req.params.id);
+    const game = await findResourceById(req.params.id);
 
-    if (req.user._id != resource.creatorId) {
+    if (req.user._id != game.creatorId) {
         return res.redirect('/');
     }
 
     try {
-
+        await deleteResource(req.params.id);
+        res.redirect('/games/catalog');
     } catch (error) {
         res.render('default', { user: req.user });
     }
@@ -70,6 +71,12 @@ resourceController.post('/:id/delete', isUser, async (req, res) => {
     } catch (error) {
         res.render('delete', { user: req.user, body: req.body, error: errorParser(error) });
     }
+});
+
+
+resourceController.get('/:id/buy', async (req, res) => {
+
+    res.redirect(`/games/${req.params.id}/details`);
 });
 
 
