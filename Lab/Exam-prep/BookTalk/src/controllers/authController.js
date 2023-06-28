@@ -55,7 +55,7 @@ authController.get('/profile', async (req, res) => {
         const books = allBooks.filter(e => e.wishList.some(e => e == req.user._id));
         res.render('profile', { user: req.user, books });
     } catch (error) {
-        res.render('register', { user: req.user, error: errorParser(error) });
+        res.render('default', { user: req.user, error: errorParser(error) });
 
     }
 });
