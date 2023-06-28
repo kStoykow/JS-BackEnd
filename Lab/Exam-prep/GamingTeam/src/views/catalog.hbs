@@ -1,27 +1,27 @@
-<h1>CREATE</h1>
-<div>
+<main id="catalog">
+	<section class="game-market">
+		<h1>Game Trade Code</h1>
+		{{#if games}}
+		{{#each games}}
+		<div class="offer-list">
+			<div class="game">
+				<div class="game-img">
+					<img src="{{imageUrl}}">
+				</div>
+				<div class="game-info">
+					<h1>{{name}}</h1>
+					<p><span>Platform: </span>{{platform}}</p>
+					<p><span>Genre: </span>{{genre}}</p>
+					<p><span>Price: </span>${{price}}</p>
+				</div>
 
-	CREAte
-</div>
-<img class="cube" src="">
-<div class="details">
-	<p><span>Description:</span> </p>
-	<p><span>Difficulty level:</span> </p>
-	<a class="btn" href="/">Back</a>
-	<a class="btn" href="/attach/accessory/">Add Accessory</a>
-	<a class="btn" href="/edit/">Edit Cube</a>
-	<a class="btn" href="/delete/">Delete Cube</a>
-</div>
-
-<h2>Accessories</h2>
-<div class="accessories">
-	<div class="accessory">
-		<img src="" alt="stickerName">
-		<h3>Create<h3>
-	</div>
-	<p>CREATE</p>
-</div>
-
-<h3 class="italic">This cube has no accessories yet...</h3>
-
-</div>
+				<a href="/games/{{_id}}/details" class="btn-details">Details</a>
+			</div>
+		</div>
+		{{else}}
+		<div class="no-offer">
+			<p>There are no game offers found!</p>
+		</div>
+		{{/if}}
+	</section>
+</main>
