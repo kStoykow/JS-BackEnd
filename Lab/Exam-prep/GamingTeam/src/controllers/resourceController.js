@@ -2,11 +2,7 @@ const resourceController = require('express').Router();
 const errorParser = require('../util/errorParser');
 
 const isUser = require('../middlewares/isUser');
-const { createResource, findAll, findResourceById, editResource, deleteResource, buy } = require('../services/resourceService');
-//TODO:CHECK GUARDS
-//TODO:CHECK GUARDS
-//TODO: check if populating fields on wrong validation
-//TODO: check if populating fields on wrong validation
+const { createResource, findAll, findResourceById, editResource, deleteResource, buy, searchGame } = require('../services/resourceService');
 
 resourceController.get('/create', isUser, async (req, res) => res.render('create', { user: req.user }));
 
@@ -21,6 +17,26 @@ resourceController.post('/create', isUser, async (req, res) => {
     }
 });
 
+resourceController.get('/search', async (req, res) => {
+    const { search, platform } = req.query;
+    const optionsMap = [
+        { value: "", label: '-------' },
+        { value: "PC", label: 'PC' },
+        { value: "Nintendo", label: 'Nintendo' },
+        { value: "PS4", label: 'PS4' },
+        { value: "PS5", label: 'PS5' },
+        { value: "XBOX", label: 'XBOX' }];
+
+    const options = optionsMap.map(e => e.value == platform ? { ...e, selected: true } : e);
+
+    try {
+        const games = await searchGame(search, platform);
+        res.render('search', { user: req.user, games, options, search })
+
+    } catch (error) {
+        res.render('default', { user: req.user });
+    }
+});
 
 resourceController.get('/catalog', async (req, res) => {
     try {
@@ -77,34 +93,56 @@ resourceController.get('/:id/buy', isUser, async (req, res) => {
 
 
 resourceController.get('/:id/edit', isUser, async (req, res) => {
-    const resource = await findResourceById(req.params.id);
+    const game = await findResourceById(req.params.id);
 
-    if (req.user._id != resource.creatorId) {
+    const optionsMap = [
+        { value: "", label: '-------' },
+        { value: "PC", label: 'PC' },
+        { value: "Nintendo", label: 'Nintendo' },
+        { value: "PS4", label: 'PS4' },
+        { value: "PS5", label: 'PS5' },
+        { value: "XBOX", label: 'XBOX' }];
+
+    const options = optionsMap.map(e => e.value == game.platform ? { ...e, selected: true } : e);
+
+    if (req.user._id != game.creatorId) {
         return res.redirect('/');
     }
 
+
     try {
 
-        res.render('edit', { user: req.user, resource });
+        res.render('edit', { user: req.user, game, options });
     } catch (error) {
-        res.render('default', { user: req.user });
+        res.render('edit', { user: req.user, game, options, body: req.body, error: errorParser(error) });
     }
 });
 
 resourceController.post('/:id/edit', isUser, async (req, res) => {
-    const resource = await findResourceById(req.params.id);
+    const game = await findResourceById(req.params.id);
+    const optionsMap = [
+        { value: "", label: '-------' },
+        { value: "PC", label: 'PC' },
+        { value: "Nintendo", label: 'Nintendo' },
+        { value: "PS4", label: 'PS4' },
+        { value: "PS5", label: 'PS5' },
+        { value: "XBOX", label: 'XBOX' }];
 
-    if (req.user._id != resource.creatorId) {
+    const options = optionsMap.map(e => e.value == game.platform ? { ...e, selected: true } : e);
+
+    if (req.user._id != game.creatorId) {
         return res.redirect('/');
     }
 
     try {
+        await editResource(game._id, req.body);
 
-
-        res.redirect('/');
+        res.redirect(`/games/${game._id}/details`);
     } catch (error) {
-        res.render('edit', { user: req.user, body: req.body, error: errorParser(error) });
+        res.render('edit', { user: req.user, game, options, error: errorParser(error) });
     }
 });
+
+
 
 module.exports = resourceController;

@@ -30,6 +30,9 @@ authController.post('/register', isGuest, async (req, res) => {
         if (!email) {
             throw 'Email is required.';
         }
+        if (password.length < 4) {
+            throw 'Password must be atleast 4 char long.';
+        }
         if (!password || (password !== repeatPassword)) {
             throw 'Password missmatch.'
         }
@@ -37,7 +40,7 @@ authController.post('/register', isGuest, async (req, res) => {
         const user = await register(username, email, password);
 
         res.redirect('/');
-        
+
     } catch (error) {
         res.render('register', { user: req.user, body: req.body, error: errorParser(error) });
     }
