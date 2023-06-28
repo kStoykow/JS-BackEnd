@@ -24,9 +24,8 @@ resourceController.post('/create', isUser, async (req, res) => {
 
 resourceController.get('/catalog', async (req, res) => {
     try {
-        // const resources = await findAll();
-        const resources = [];
-        res.render('catalog', { user: req.user, resources });
+        const games = await findAll();
+        res.render('catalog', { user: req.user, games });
     } catch (error) {
         res.render('default', { user: req.user });
     }
@@ -35,10 +34,10 @@ resourceController.get('/catalog', async (req, res) => {
 
 resourceController.get('/:id/details', async (req, res) => {
     try {
-        const resource = await findResourceById(req.params.id);
-        const isOwner = req.user?._id == resource.creatorId;
+        const game = await findResourceById(req.params.id);
+        const isOwner = req.user?._id == game.creatorId;
 
-        res.render('details', { user: req.user, resource });
+        res.render('details', { user: req.user, game });
     } catch (error) {
         res.render('default', { user: req.user });
     }

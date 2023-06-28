@@ -2,24 +2,15 @@ const Resource = require('../models/Resource');
 
 //TODO: check if await/return/lean is needed. Fix func if needed.
 
-const createResource = (data) => {
-    return Resource.create(data).lean();
-}
+const createResource = (data) => Resource.create(data);
 
-const findAll = () => Resource.find({});
+const findAll = () => Resource.find({}).lean();
 
-const findResourceById = (id) => {
-    return Resource.findById(id).lean();
-}
+const findResourceById = (id) => Resource.findById(id).lean();
 
+const editResource = (resourceId, data) => Resource.findByIdAndUpdate(resourceId, data);
 
-const editResource = (resourceId, data) => {
-    return Resource.findByIdAndUpdate(resourceId, data);
-}
-
-const deleteResource = (resourceId) => {
-    return Resource.findByIdAndDelete(resourceId);
-}
+const deleteResource = (resourceId) => Resource.findByIdAndDelete(resourceId);
 
 module.exports = {
     createResource,

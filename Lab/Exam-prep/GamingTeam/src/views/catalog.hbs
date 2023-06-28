@@ -2,8 +2,8 @@
 	<section class="game-market">
 		<h1>Game Trade Code</h1>
 		{{#if games}}
-		{{#each games}}
 		<div class="offer-list">
+			{{#each games}}
 			<div class="game">
 				<div class="game-img">
 					<img src="{{imageUrl}}">
@@ -17,9 +17,9 @@
 
 				<a href="/games/{{_id}}/details" class="btn-details">Details</a>
 			</div>
+			{{/each}}
+			{{else}}
 		</div>
-		{{/each}}
-		{{else}}
 		<div class="no-offer">
 			<p>There are no game offers found!</p>
 		</div>
