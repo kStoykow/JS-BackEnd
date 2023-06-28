@@ -12,10 +12,13 @@ const editResource = (resourceId, data) => Resource.findByIdAndUpdate(resourceId
 
 const deleteResource = (resourceId) => Resource.findByIdAndDelete(resourceId);
 
+const buy = (userId, gameId) => Resource.findByIdAndUpdate(gameId, { $push: { buyers: userId } });
+
 module.exports = {
     createResource,
     findAll,
     findResourceById,
     editResource,
-    deleteResource
+    deleteResource,
+    buy
 }

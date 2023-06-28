@@ -2,7 +2,7 @@ const resourceController = require('express').Router();
 const errorParser = require('../util/errorParser');
 
 const isUser = require('../middlewares/isUser');
-const { createResource, findAll, findResourceById, editResource, deleteResource } = require('../services/resourceService');
+const { createResource, findAll, findResourceById, editResource, deleteResource, buy } = require('../services/resourceService');
 //TODO:CHECK GUARDS
 //TODO:CHECK GUARDS
 //TODO: check if populating fields on wrong validation
@@ -36,8 +36,9 @@ resourceController.get('/:id/details', async (req, res) => {
     try {
         const game = await findResourceById(req.params.id);
         const isOwner = req.user?._id == game.creatorId;
+        const isBought = game.buyers.some(userId => req.user?._id == userId);
 
-        res.render('details', { user: req.user, isOwner, game });
+        res.render('details', { user: req.user, isOwner, isBought, game });
     } catch (error) {
         res.render('default', { user: req.user });
     }
@@ -59,23 +60,18 @@ resourceController.get('/:id/delete', isUser, async (req, res) => {
     }
 });
 
-resourceController.post('/:id/delete', isUser, async (req, res) => {
-    const resource = await findResourceById(req.params.id);
 
-    if (req.user._id != resource.creatorId) {
+resourceController.get('/:id/buy', isUser, async (req, res) => {
+    const game = await findResourceById(req.params.id);
+
+    if (req.user._id == game.creatorId) {
         return res.redirect('/');
     }
-
-    try {
-
-    } catch (error) {
-        res.render('delete', { user: req.user, body: req.body, error: errorParser(error) });
+    if (game.buyers.some(e => e == req.user._id)) {
+        return res.redirect('/games/catalog');
     }
-});
 
-
-resourceController.get('/:id/buy', async (req, res) => {
-
+    await buy(req.user._id, req.params.id);
     res.redirect(`/games/${req.params.id}/details`);
 });
 
