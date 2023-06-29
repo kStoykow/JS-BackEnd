@@ -73,32 +73,32 @@ resourceController.get('/:id/delete', isUser, async (req, res) => {
 
 
 resourceController.get('/:id/edit', isUser, async (req, res) => {
-    const resource = await findResourceById(req.params.id);
+    const auction = await findResourceById(req.params.id);
 
-    if (req.user._id != resource.creatorId) {
+    if (req.user._id != auction.creatorId) {
         return res.redirect('/');
     }
 
     try {
 
-        res.render('edit', { user: req.user, resource });
+        res.render('edit', { user: req.user, auction });
     } catch (error) {
-
+        res.render('default', { user: req.user, error: errorParser(error) });
     }
 });
 
 resourceController.post('/:id/edit', isUser, async (req, res) => {
-    const resource = await findResourceById(req.params.id);
+    const auction = await findResourceById(req.params.id);
 
-    if (req.user._id != resource.creatorId) {
+    if (req.user._id != auction.creatorId) {
         return res.redirect('/');
     }
 
     try {
-
-        res.redirect('/');
+        await editResource(req.params.id, req.body);
+        res.redirect(`/auctions/${req.params.id}/details`);
     } catch (error) {
-        res.render('edit', { user: req.user, body: req.body, error: errorParser(error) });
+        res.render('edit', { user: req.user, auction, error: errorParser(error) });
     }
 });
 
