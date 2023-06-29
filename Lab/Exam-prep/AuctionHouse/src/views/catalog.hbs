@@ -1,27 +1,44 @@
-<h1>CREATE</h1>
-<div>
+<main>
+    {{#if error}}
+    <div class="error-box">
+        <p>{{error}}</p>
+    </div>
+    {{/if}}
 
-	CREAte
-</div>
-<img class="cube" src="">
-<div class="details">
-	<p><span>Description:</span> </p>
-	<p><span>Difficulty level:</span> </p>
-	<a class="btn" href="/">Back</a>
-	<a class="btn" href="/attach/accessory/">Add Accessory</a>
-	<a class="btn" href="/edit/">Edit Cube</a>
-	<a class="btn" href="/delete/">Delete Cube</a>
-</div>
+    <section id="catalog-section" class="spaced">
 
-<h2>Accessories</h2>
-<div class="accessories">
-	<div class="accessory">
-		<img src="" alt="stickerName">
-		<h3>Create<h3>
-	</div>
-	<p>CREATE</p>
-</div>
+        <h1 class="item">Auctions</h1>
 
-<h3 class="italic">This cube has no accessories yet...</h3>
+        <!-- List of available auctions -->
+        {{#if items}}
+        {{#each items}}
+        <ul class="catalog cards">
+            <li class="item">
+                <header class="pad-med">
+                    <h2>{{title}}</h2>
+                </header>
 
-</div>
+                <div class="align-center">
+                    <img class="img-thumb" src="{{imageUrl}}">
+                </div>
+
+                <footer class="align-center pad-med">
+                    <p>Current price: <strong>${{price}}</strong></p>
+                    <a class="action" href="/auctions/{{_id}}/details">See details</a>
+                </footer>
+            </li>
+        </ul>
+        {{/each}}
+        {{else}}
+        <!-- If there are no auctions to display -->
+        <div class="item pad-large align-center">
+            <p>Nothing has been listed yet. Be the first!</p>
+            <div>
+                <a class="action" href="/auctions/create">Publish Auction</a>
+            </div>
+        </div>
+        {{/if}}
+
+    </section>
+
+</main>

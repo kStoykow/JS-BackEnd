@@ -1,14 +1,39 @@
-<h1>Browser</h1>
+<main>
+    {{#if error}}
+    <div class="error-box">
+        <p>{{error}}</p>
+    </div>
+    {{/if}}
 
-<form action="/" method="/get">
-    <input type="text" class="search" name="search" placeholder="search" value="{{search}}">
-    <input type="number" name="from" class="difficulty" placeholder="Difficulty from..." value="{{from}}">
-    <span>-</span>
-    <input type="number" name="to" class="difficulty" placeholder="Difficulty to..." value="{{to}}">
-    <input type="submit" value="search">
-</form>
-<div>
-    <p>some text</p>
-    <h4>some other stuff</h4>
-</div>
-<h1>NO CUBES WERE FOUND</h1>
+    <section id="catalog-section">
+
+        <h1 class="item">Home</h1>
+
+        <div class="item">
+
+            <div class="layout left med">
+                <div class="col">
+                    <img src="/assets/splash.jpg" class="img-med">
+                </div>
+
+                <div class="content pad-med">
+                    <p>Welcome to the online Auction House.</p>
+                    <p>Buy and sell items in categories Real Estate, Vehicles, Furniture, Electronics and
+                        Others. Browse available items and place your bid. Create a new listing and collect the
+                        highest offer.
+                    </p>
+
+                    <div class="align-center">
+                        <a class="action" href="/auctions/catalog">Browse Listings</a>
+                        {{#if user}}
+                        <a class="action" href="/auctions/create">Publish Auction</a>
+                        {{/if}}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+</main>

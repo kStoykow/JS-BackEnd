@@ -1,23 +1,51 @@
-<img class="cube" src="{{cube.imageUrl}}">
-<div class="details">
-  <p><span>Description:</span> description</p>
-  <p><span>Difficulty level:</span> difficulty</p>
-  <a class="btn" href="/">Back</a>
-  <a class="btn" href="/attach/accessory/{{cube._id}}">Add Accessory</a>
-  <a class="btn" href="/edit/{{cube._id}}">Edit Cube</a>
-  <a class="btn" href="/delete/{{cube._id}}">Delete Cube</a>
-</div>
+<main>
+    {{#if error}}
+    <div class="error-box">
+        <p>{{error}}</p>
+    </div>
+    {{/if}}
 
-<h2>Accessories</h2>
-<div class="accessories">
+    <section id="catalog-section">
 
-  <div class="accessory">
-    <img src="imageUrl" alt="stickerName">
-    <h3>name</h3>
-    <p>description</p>
-  </div>
+        <h1 class="item"> Fishing Boat </h1>
+        <div class="item padded">
 
+            <div class="layout right large">
 
-  <h3 class="italic">This cube has no accessories yet...</h3>
+                <div class="col">
+                    <img src="/static/assets/boat.jpg" class="img-large">
+                </div>
 
-</div>
+                <div class="content pad-med">
+
+                    <p>In category: <strong>Vehicles</strong></p>
+                    <p>Excellent condition. Onboard diesel motor, upholstered cockpit, fishing sonar. Includes
+                        trailer.</p>
+
+                    <div class="align-center">
+                        <div>
+                            Current price: $<strong>5000</strong>
+                        </div>
+
+                        <!-- If current user can place a bid -->
+                        <form class="vertical" method="post" action="#">
+                            <label><span>Bid amount</span><input type="number" name=""></label>
+                            <input class="action" type="submit" value="Place bid">
+                        </form>
+
+                        <!-- If current user is the bidder -->
+                        <div>
+                            You are currently the <strong>highest bidder</strong> for this auction
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <footer>Listed by Peter Jackson</footer>
+        </div>
+
+    </section>
+
+</main>

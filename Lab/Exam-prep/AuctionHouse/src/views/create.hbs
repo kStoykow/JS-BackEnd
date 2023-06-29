@@ -1,27 +1,55 @@
-<h1>CREATE</h1>
-<div>
+<main>
+    {{#if error}}
+    <div class="error-box">
+        <p>{{error}}</p>
+    </div>
+    {{/if}}
 
-	CREAte
-</div>
-<img class="cube" src="">
-<div class="details">
-	<p><span>Description:</span> </p>
-	<p><span>Difficulty level:</span> </p>
-	<a class="btn" href="/">Back</a>
-	<a class="btn" href="/attach/accessory/">Add Accessory</a>
-	<a class="btn" href="/edit/">Edit Cube</a>
-	<a class="btn" href="/delete/">Delete Cube</a>
-</div>
+    <section id="create-section" class="">
 
-<h2>Accessories</h2>
-<div class="accessories">
-	<div class="accessory">
-		<img src="" alt="stickerName">
-		<h3>Create<h3>
-	</div>
-	<p>CREATE</p>
-</div>
+        <h1 class="item">New Auction</h1>
 
-<h3 class="italic">This cube has no accessories yet...</h3>
+        <div class="item padded align-center">
 
-</div>
+            <form class="layout left large" method="POST">
+
+                <div class="col aligned">
+                    <label>
+                        <span>Title</span>
+                        <input type="text" name="title"></label>
+                    <label>
+                        <span>Category</span>
+                        <select name="category">
+                            <option value="estate">Real Estate</option>
+                            <option value="vehicles">Vehicles</option>
+                            <option value="furniture">Furniture</option>
+                            <option value="electronics">Electronics</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </label>
+                    <label>
+                        <span>Image URL</span>
+                        <input type="text" name="imageUrl"></label>
+                    <label>
+                        <span>Starting price</span>
+                        <input type="number" name="price"></label>
+                </div>
+
+                <div class="content pad-med align-center vertical">
+                    <label>
+                        <span>Description</span>
+                        <textarea name="description"></textarea>
+                    </label>
+
+                    <div class="align-center">
+                        <input class="action" type="submit" value="Publish Item">
+                    </div>
+                </div>
+
+            </form>
+
+        </div>
+
+    </section>
+
+</main>

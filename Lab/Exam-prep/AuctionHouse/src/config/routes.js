@@ -6,8 +6,7 @@ const defaultController = require('../controllers/defaultController');
 module.exports = (app) => {
     app.use('/', homeController)
     app.use('/user', authController);
-    app.use('/resources', resourceController); //TODO: fix path
-
+    app.use('/auctions', resourceController); 
     app.use('*', defaultController);
 
 }
