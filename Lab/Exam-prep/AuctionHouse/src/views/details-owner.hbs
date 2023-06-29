@@ -37,12 +37,9 @@
                             <!-- If there is a bidder -->
                             Bid by <strong>{{highestBid.firstName}} {{highestBid.lastName}}</strong>
 
-                            <!-- # Bonus: If there is a bidder -->
-                            <!--
+                            <a class="action pad-med cta" href="/auctions/{{auction._id}}/close">Close Auction</a>
 
-                                    <a class="action pad-med cta" href="#">Close Auction</a>
-                                    
-                                    # End of Bonus -->
+
                             {{else}}
                             <!-- If there are no bids -->
                             No bids

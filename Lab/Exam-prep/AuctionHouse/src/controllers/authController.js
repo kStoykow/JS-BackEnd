@@ -4,6 +4,7 @@ const errorParser = require('../util/errorParser');
 const isGuest = require('../middlewares/isGuest');
 const isUser = require('../middlewares/isUser');
 const { register, login, verifyToken } = require('../services/userService');
+const { closedAuctions } = require('../services/resourceService');
 
 //TODO: check guards
 
@@ -19,6 +20,7 @@ authController.post('/login', isGuest, async (req, res) => {
         res.render('login', { user: req.user, error: errorParser(error) });
     }
 });
+
 
 authController.get('/register', isGuest, (req, res) => res.render('register', { user: req.user }));
 authController.post('/register', isGuest, async (req, res) => {
@@ -46,6 +48,12 @@ authController.post('/register', isGuest, async (req, res) => {
     } catch (error) {
         res.render('register', { user: req.user, body: req.body, error: errorParser(error) });
     }
+});
+
+
+authController.get('/closed', isUser, async (req, res) => {
+    const closed = await closedAuctions();
+    res.render('closed-auctions', { user: req.user, closed })
 });
 
 

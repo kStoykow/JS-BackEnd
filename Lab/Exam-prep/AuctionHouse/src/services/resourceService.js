@@ -4,7 +4,9 @@ const Resource = require('../models/Resource');
 
 const createResource = (data) => Resource.create(data);
 
-const findAll = () => Resource.find({}).lean();
+const findAll = () => Resource.find({ isClosed: false }).lean();
+
+const closedAuctions = () => Resource.find({ isClosed: true }).populate('bidder').lean();
 
 const findResourceById = (id) => Resource.findById(id).lean();
 
@@ -14,11 +16,14 @@ const deleteResource = (resourceId) => Resource.findByIdAndDelete(resourceId);
 
 const bidding = (userId, resourceId, bid) => Resource.findByIdAndUpdate(resourceId, { bidder: userId, price: bid });
 
+const close = (resourceId) => Resource.findByIdAndUpdate(resourceId, { isClosed: true });
 module.exports = {
     createResource,
     findAll,
     findResourceById,
     editResource,
-    deleteResource, 
-    bidding
+    deleteResource,
+    bidding,
+    close,
+    closedAuctions
 }

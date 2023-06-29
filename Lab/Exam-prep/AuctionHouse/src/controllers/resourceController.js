@@ -2,7 +2,7 @@ const resourceController = require('express').Router();
 const errorParser = require('../util/errorParser');
 
 const isUser = require('../middlewares/isUser');
-const { createResource, findAll, findResourceById, editResource, deleteResource, bidding } = require('../services/resourceService');
+const { createResource, findAll, findResourceById, editResource, deleteResource, bidding, close } = require('../services/resourceService');
 const { findUserById } = require('../services/userService');
 //TODO:CHECK GUARDS
 //TODO:CHECK GUARDS
@@ -52,6 +52,18 @@ resourceController.post('/:id/bid', isUser, async (req, res) => {
     try {
         await bidding(req.user._id, auction._id, bid);
         res.redirect(`/auctions/${req.params.id}/details`);
+    } catch (error) {
+        res.render('default', { user: req.user });
+    }
+});
+
+
+
+resourceController.get('/:id/close', isUser, async (req, res) => {
+
+    try {
+        await close(req.params.id);
+        res.redirect(`/user/closed`);
     } catch (error) {
         res.render('default', { user: req.user });
     }

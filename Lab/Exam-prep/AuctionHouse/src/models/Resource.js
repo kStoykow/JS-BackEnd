@@ -8,6 +8,7 @@ const resourceSchema = new Schema({
     price: { type: Number, required: [true, 'Price is required.'], min: 0 },
     creatorId: { type: Schema.Types.ObjectId, ref: 'User' },
     bidder: { type: Schema.Types.ObjectId, ref: 'User' },
+    isClosed: { type: Boolean, default: false }
 });
 
 const Resource = model('Resource', resourceSchema);
