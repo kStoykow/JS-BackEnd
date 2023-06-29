@@ -63,10 +63,10 @@ resourceController.get('/:id/details', async (req, res) => {
         const auction = await findResourceById(req.params.id);
         const isOwner = req.user?._id == auction.creatorId;
         const owner = await findUserById(auction.creatorId);
-        const isBidder = req.user._id == auction.bidder;
-        const highestBid = auction.bidder;
+        const isBidder = req.user?._id == auction.bidder;
+        const highestBid = await findUserById(auction.bidder);
         if (isOwner) {
-            return res.render('details-owner', { user: req.user, auction, owner })
+            return res.render('details-owner', { user: req.user, auction, owner, highestBid })
         }
 
         res.render('details', { user: req.user, auction, owner, isBidder });
