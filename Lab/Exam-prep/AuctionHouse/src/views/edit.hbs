@@ -20,11 +20,9 @@
                     <label>
                         <span>Category</span>
                         <select name="category">
-                            <option value="estate">Real Estate</option>
-                            <option value="vehicles">Vehicles</option>
-                            <option value="furniture">Furniture</option>
-                            <option value="electronics">Electronics</option>
-                            <option value="other">Other</option>
+                            {{#each options}}
+                            <option value="{{value}}" {{#if selected}}selected{{/if}}>{{label}}</option>
+                            {{/each}}
                         </select>
                     </label>
                     <label>
@@ -35,7 +33,7 @@
                         <span>Starting price</span>
 
                         <!-- If the current auction has a bidder, this input field should be disabled -->
-                        <input type="number" name="price" value="{{auction.price}}">
+                        <input type="number" name="price" {{#if bidder}}disabled{{/if}} value="{{auction.price}}">
                     </label>
                 </div>
 

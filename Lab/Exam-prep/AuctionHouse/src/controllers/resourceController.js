@@ -59,6 +59,13 @@ resourceController.post('/:id/bid', isUser, async (req, res) => {
 
 
 resourceController.get('/:id/details', async (req, res) => {
+    const optionsMap = [
+        { value: "estate", label: 'Real Estate' },
+        { value: "vehicles", label: 'Vehicles' },
+        { value: "furniture", label: 'Furniture' },
+        { value: "electronics", label: 'Electronics' },
+        { value: "other", label: 'Other' }];
+
     try {
         const auction = await findResourceById(req.params.id);
         const isOwner = req.user?._id == auction.creatorId;
@@ -66,10 +73,10 @@ resourceController.get('/:id/details', async (req, res) => {
         const isBidder = req.user?._id == auction.bidder;
         const highestBid = await findUserById(auction.bidder);
         if (isOwner) {
-            return res.render('details-owner', { user: req.user, auction, owner, highestBid })
+            return res.render('details-owner', { user: req.user, auction, owner, highestBid, category: optionsMap.find(e => e.value == auction.category) })
         }
 
-        res.render('details', { user: req.user, auction, owner, isBidder });
+        res.render('details', { user: req.user, auction, owner, isBidder, category: optionsMap.find(e => e.value == auction.category) });
     } catch (error) {
         res.render('details', { user: req.user, error: errorParser(error) });
     }
@@ -94,14 +101,22 @@ resourceController.get('/:id/delete', isUser, async (req, res) => {
 
 resourceController.get('/:id/edit', isUser, async (req, res) => {
     const auction = await findResourceById(req.params.id);
+    const bidder = auction.bidder;
+    const optionsMap = [
+        { value: "estate", label: 'Real Estate' },
+        { value: "vehicles", label: 'Vehicles' },
+        { value: "furniture", label: 'Furniture' },
+        { value: "electronics", label: 'Electronics' },
+        { value: "other", label: 'Other' }];
+
+    const options = optionsMap.map(e => e.value == auction.category ? { ...e, selected: true } : e);
 
     if (req.user._id != auction.creatorId) {
         return res.redirect('/');
     }
 
     try {
-
-        res.render('edit', { user: req.user, auction });
+        res.render('edit', { user: req.user, auction, bidder, options });
     } catch (error) {
         res.render('default', { user: req.user, error: errorParser(error) });
     }
