@@ -6,7 +6,7 @@ const bcrypt = require('bcrypt');
 
 
 const findUserById = async (id) => {
-    return User.findById(id);
+    return User.findById(id).lean();
 }
 
 const register = async (email, firstName, lastName, password) => {

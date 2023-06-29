@@ -3,6 +3,7 @@ const errorParser = require('../util/errorParser');
 
 const isUser = require('../middlewares/isUser');
 const { createResource, findAll, findResourceById, editResource, deleteResource } = require('../services/resourceService');
+const { findUserById } = require('../services/userService');
 //TODO:CHECK GUARDS
 //TODO:CHECK GUARDS
 //TODO: check if populating fields on wrong validation
@@ -33,14 +34,24 @@ resourceController.get('/catalog', async (req, res) => {
 });
 
 
+resourceController.post('/:id/bid', async (req, res) => {
+
+});
+
+
 resourceController.get('/:id/details', async (req, res) => {
     try {
-        const resource = await findResourceById(req.params.id);
-        const isOwner = req.user?._id == resource.creatorId;
+        const auction = await findResourceById(req.params.id);
+        const isOwner = req.user?._id == auction.creatorId;
+        const owner = await findUserById(auction.creatorId);
 
-        res.render('details', { user: req.user, resource });
+        if (isOwner) {
+            return res.render('details-owner', { user: req.user, auction, owner })
+        }
+
+        res.render('details', { user: req.user, auction, owner });
     } catch (error) {
-
+        res.render('details', { user: req.user, error: errorParser(error) });
     }
 });
 

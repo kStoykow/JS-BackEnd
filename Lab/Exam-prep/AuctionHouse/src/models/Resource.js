@@ -7,7 +7,7 @@ const resourceSchema = new Schema({
     imageUrl: { type: String },
     price: { type: Number, required: [true, 'Price is required.'], min: 0 },
     creatorId: { type: Schema.Types.ObjectId, ref: 'User' },
-    bidders: { type: [Schema.Types.ObjectId], ref: 'User' },
+    bidder: { type: Schema.Types.ObjectId, ref: 'User' },
 });
 
 const Resource = model('Resource', resourceSchema);
