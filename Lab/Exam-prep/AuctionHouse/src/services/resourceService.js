@@ -12,10 +12,13 @@ const editResource = (resourceId, data) => Resource.findByIdAndUpdate(resourceId
 
 const deleteResource = (resourceId) => Resource.findByIdAndDelete(resourceId);
 
+const bidding = (userId, resourceId, bid) => Resource.findByIdAndUpdate(resourceId, { bidder: userId, price: bid });
+
 module.exports = {
     createResource,
     findAll,
     findResourceById,
     editResource,
-    deleteResource
+    deleteResource, 
+    bidding
 }
