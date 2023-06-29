@@ -2,7 +2,7 @@ const Resource = require('../models/Resource');
 
 //TODO: check if await/return/lean is needed. Fix func if needed.
 
-const createResource = (data) => Resource.create(data).lean();
+const createResource = (data) => Resource.create(data);
 
 const findAll = () => Resource.find({}).lean();
 

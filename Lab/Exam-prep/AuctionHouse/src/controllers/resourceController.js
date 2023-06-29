@@ -12,8 +12,12 @@ resourceController.get('/create', isUser, async (req, res) => res.render('create
 
 resourceController.post('/create', isUser, async (req, res) => {
     try {
-        const { name, image, description } = req.body;
+        const { title, category, imageUrl, price, description } = req.body;
+        await createResource({ title, category, imageUrl, price, description, creatorId: req.user._id });
+
+        res.redirect('/auctions/catalog');
     } catch (error) {
+        console.log(error);
         res.render('create', { user: req.user, body: req.body, error: errorParser(error) });
     }
 });
@@ -21,9 +25,8 @@ resourceController.post('/create', isUser, async (req, res) => {
 
 resourceController.get('/catalog', async (req, res) => {
     try {
-        // const resources = await findAll();
-        const resources = [];
-        res.render('catalog', { user: req.user, resources });
+        const auctions = await findAll();
+        res.render('catalog', { user: req.user, auctions });
     } catch (error) {
         res.render('default', { user: req.user });
     }
