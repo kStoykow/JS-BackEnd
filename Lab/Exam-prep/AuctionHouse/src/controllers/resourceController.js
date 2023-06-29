@@ -57,32 +57,17 @@ resourceController.get('/:id/details', async (req, res) => {
 
 
 resourceController.get('/:id/delete', isUser, async (req, res) => {
-    const resource = await findResourceById(req.params.id);
+    const auction = await findResourceById(req.params.id);
 
-    if (req.user._id != resource.creatorId) {
+    if (req.user._id != auction.creatorId) {
         return res.redirect('/');
     }
 
     try {
-
-        res.render('delete', { user: req.user, resource });
+        await deleteResource(req.params.id);
+        res.redirect('/auctions/catalog')
     } catch (error) {
-
-    }
-});
-
-resourceController.post('/:id/delete', isUser, async (req, res) => {
-    const resource = await findResourceById(req.params.id);
-
-    if (req.user._id != resource.creatorId) {
-        return res.redirect('/');
-    }
-
-    try {
-
-        res.redirect('/');
-    } catch (error) {
-        res.render('delete', { user: req.user, body: req.body, error: errorParser(error) });
+        res.render('default', { user: req.user, error: errorParser(error) });
     }
 });
 
