@@ -3,37 +3,58 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>sometitle</title>
-    <link href="/css/site.css" type="text/css" rel="stylesheet">
-    <link rel='shortcut icon' type='image/x-icon' href='/images/favicon.png' />
+    <title>Home Page</title>
+
+    <!-- Do not forget to change the path to the css file -->
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 
 <body>
-    <div class="container">
-        <header>
-            <ul>
-                <li><img class="logo" src="/images/logo.png"></li>
-                <li><a href="/">Browse</a></li>
-                {{#if user}}
-                <li><a href="/resources/create">Add a Cube</a></li>
-                <li><a href="/user/logout">Logout</a></li>
-                {{else}}
-                <li><a href="/user/login">Login</a></li>
-                <li><a href="/user/register">Register</a></li>
-                {{/if}}
-            </ul>
-        </header>
-        <main>
-            {{#if error}}
-            <div>
-                <p><span class="error">{{error}}</span></p>
-            </div>
-            {{/if}}
 
-            {{{body}}}
-        </main>
+    <div class="box">
+        {{#if error}}
+        <div class="error-box">
+            <p>Error</p>
+        </div>
+        {{/if}}
+
+        <header class="header">
+            <article class="header-logo">
+                <!-- Do not forget to change the path to the image -->
+                <img src="/img/logo.png">
+            </article>
+            <nav class="header-nav">
+                <ul class="header-nav-list">
+                    <li class="header-nav-list-item active"> <a href="/"
+                            class="header-nav-list-item-link active">HomePage</a> </li>
+                    <li class="header-nav-list-item"> <a href="/ads/catalog" class="header-nav-list-item-link">All
+                            ads</a> </li>
+                    <!-- Logged users -->
+                    {{#if user}}
+                    <li class="header-nav-list-item"> <a href="/ads/create" class="header-nav-list-item-link">Create
+                            Ad</a> </li>
+                    <li class="header-nav-list-item"> <a href="/ads/search" class="header-nav-list-item-link">Search</a>
+                    </li>
+                    <li class="header-nav-list-item"> <a href="/user/logout"
+                            class="header-nav-list-item-link">Logout</a> </li>
+                    {{else}}
+                    <!-- Guest users -->
+                    <li class="header-nav-list-item"> <a href="/user/register"
+                            class="header-nav-list-item-link">Register</a> </li>
+                    <li class="header-nav-list-item"> <a href="/user/login" class="header-nav-list-item-link">Login</a>
+                    </li>
+                    {{/if}}
+                </ul>
+            </nav>
+        </header>
+
+        {{{body}}}
+
+        <footer>
+            <p>©Js Back-End Final Exam 2022</p>
+        </footer>
     </div>
-    <footer>@Cubicle: Exercise for Express.js and Handlebars</footer>
+
 </body>
 
 </html>

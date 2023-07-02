@@ -1,27 +1,32 @@
-<h1>CREATE</h1>
-<div>
+<main>
+	<section id="create-page">
+		<article class="create-page-container">
 
-	CREAte
-</div>
-<img class="cube" src="">
-<div class="details">
-	<p><span>Description:</span> </p>
-	<p><span>Difficulty level:</span> </p>
-	<a class="btn" href="/">Back</a>
-	<a class="btn" href="/attach/accessory/">Add Accessory</a>
-	<a class="btn" href="/edit/">Edit Cube</a>
-	<a class="btn" href="/delete/">Delete Cube</a>
-</div>
+			<form method="post" class="create-page-form">
+				<h2>Create an ad</h2>
 
-<h2>Accessories</h2>
-<div class="accessories">
-	<div class="accessory">
-		<img src="" alt="stickerName">
-		<h3>Create<h3>
-	</div>
-	<p>CREATE</p>
-</div>
+				<label for="headline">Headline:</label>
+				<input type="text" id="headline" placeholder="Front-End Developer with React" name="headline" value="">
 
-<h3 class="italic">This cube has no accessories yet...</h3>
+				<label for="location">Location:</label>
+				<input type="text" id="location" placeholder="Ruse, Bulgaria" name="location" value="">
 
-</div>
+				<label for="company-name">Company name:</label>
+				<input type="text" id="company-name" placeholder="Digital Solutions" name="name" value="">
+
+				<label for="company-description">Company description:</label>
+				<input type="text" id="company-description" placeholder="We are developing a web application"
+					name="description" value="">
+
+				<article class="create-page-button">
+					<button class="btn-create">Create</button>
+				</article>
+			</form>
+
+			<article class="create-page-image">
+				<img src="/img/job.png" alt="image">
+			</article>
+		</article>
+
+	</section>
+</main>
