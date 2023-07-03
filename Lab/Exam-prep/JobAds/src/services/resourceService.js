@@ -12,10 +12,13 @@ const editResource = (resourceId, data) => Resource.findByIdAndUpdate(resourceId
 
 const deleteResource = (resourceId) => Resource.findByIdAndDelete(resourceId);
 
+const apply = async (userId, resourceId) => await Resource.findByIdAndUpdate(resourceId, { $push: { applies: userId } });
+
 module.exports = {
     createResource,
     findAll,
     findResourceById,
     editResource,
-    deleteResource
+    deleteResource,
+    apply
 }

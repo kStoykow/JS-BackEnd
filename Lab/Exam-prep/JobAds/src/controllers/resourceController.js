@@ -2,7 +2,7 @@ const resourceController = require('express').Router();
 const errorParser = require('../util/errorParser');
 
 const isUser = require('../middlewares/isUser');
-const { createResource, findAll, findResourceById, editResource, deleteResource } = require('../services/resourceService');
+const { createResource, findAll, findResourceById, editResource, deleteResource, apply } = require('../services/resourceService');
 //TODO:CHECK GUARDS
 //TODO:CHECK GUARDS
 //TODO: check if populating fields on wrong validation
@@ -23,6 +23,24 @@ resourceController.post('/create', isUser, async (req, res) => {
 });
 
 
+resourceController.get('/:id/apply', isUser, async (req, res) => {
+    const ad = await findResourceById(req.params.id);
+    if (ad.applies.some(id => id == req.user._id)) {
+        return res.redirect(`/ads/${req.params.id}/details`);
+    }
+
+    try {
+        await apply(req.user._id, req.params.id);
+
+        res.redirect(`/ads/${req.params.id}/details`);
+    } catch (error) {
+        console.log(error);
+        res.render('default', { user: req.user, error: errorParser(error) });
+    }
+});
+
+
+
 resourceController.get('/catalog', async (req, res) => {
     try {
         const ads = await findAll();
@@ -37,8 +55,9 @@ resourceController.get('/:id/details', async (req, res) => {
     try {
         const ad = await findResourceById(req.params.id);
         const isOwner = req.user?._id == ad.creatorId._id;
+        const isApply = ad.applies.some(id => id == req.user?._id);
 
-        res.render('details', { user: req.user, ad, isOwner });
+        res.render('details', { user: req.user, ad, isOwner, isApply });
     } catch (error) {
         res.render('default', { user: req.user, error: errorParser(error) });
     }
