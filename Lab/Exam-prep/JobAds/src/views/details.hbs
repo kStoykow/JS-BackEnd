@@ -44,14 +44,13 @@
     {{#if applies.applies}}
     <section id="info-about-candidates">
         <h2>Candidates for this ad:</h2>
-        {{!-- <!\--If there are people who have applied, show each of them in the following format--\> --}}
-            {{#each applies.applies}}
-            <article class="info-about-candidates-card">
-                <h2>Email: {{email}}</h2>
-                <h3>{{description}}</h3>
-            </article>
-            {{/each}}
-            {{/if}}
+        {{#each applies.applies}}
+        <article class="info-about-candidates-card">
+            <h2>Email: {{email}}</h2>
+            <h3>{{description}}</h3>
+        </article>
+        {{/each}}
+        {{/if}}
     </section>
     {{/if}}
 </main>

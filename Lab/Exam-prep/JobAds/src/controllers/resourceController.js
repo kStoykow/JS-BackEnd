@@ -3,10 +3,6 @@ const errorParser = require('../util/errorParser');
 
 const isUser = require('../middlewares/isUser');
 const { createResource, findAll, findResourceById, editResource, deleteResource, apply, getApplies } = require('../services/resourceService');
-//TODO:CHECK GUARDS
-//TODO:CHECK GUARDS
-//TODO: check if populating fields on wrong validation
-//TODO: check if populating fields on wrong validation
 
 resourceController.get('/create', isUser, async (req, res) => res.render('create', { user: req.user }));
 
@@ -55,10 +51,9 @@ resourceController.get('/:id/details', async (req, res) => {
     try {
         const ad = await findResourceById(req.params.id);
         const applies = await getApplies(req.params.id);
-        console.log(applies);
         const isOwner = req.user?._id == ad.creatorId._id;
         const isApply = ad.applies.some(id => id == req.user?._id);
-        
+
         res.render('details', { user: req.user, ad, isOwner, isApply, applies });
     } catch (error) {
         res.render('default', { user: req.user, error: errorParser(error) });
