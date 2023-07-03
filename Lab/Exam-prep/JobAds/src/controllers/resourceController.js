@@ -69,7 +69,7 @@ resourceController.get('/:id/edit', isUser, async (req, res) => {
 
         res.render('edit', { user: req.user, ad });
     } catch (error) {
-        res.render('edit', { user: req.user, body: req.body, error: errorParser(error) });
+        res.render('edit', { user: req.user, error: errorParser(error) });
     }
 });
 
@@ -81,8 +81,9 @@ resourceController.post('/:id/edit', isUser, async (req, res) => {
     }
 
     try {
+        await editResource(req.params.id, req.body);
 
-        res.redirect('/');
+        res.redirect(`/ads/${req.params.id}/details`);
     } catch (error) {
         res.render('edit', { user: req.user, body: req.body, error: errorParser(error) });
     }

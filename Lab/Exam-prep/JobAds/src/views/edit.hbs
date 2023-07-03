@@ -1,33 +1,33 @@
-  <main>
+<main>
 
-            <section id="edit-page">
+    <section id="edit-page">
 
-                <article class="edit-page-container">
-                    <form  method="post" class="edit-page-form">
-                        <h2>Edit an ad</h2>
+        <article class="edit-page-container">
+            <form method="post" class="edit-page-form">
+                <h2>Edit an ad</h2>
 
-                        <label for="headline">Headline:</label>
-                        <input type="text" id="headline" name="headline" value="">
+                <label for="headline">Headline:</label>
+                <input type="text" id="headline" name="headline" value="{{ad.headline}}">
 
-                        <label for="location">Location:</label>
-                        <input type="text" id="location" name="location" value="">
+                <label for="location">Location:</label>
+                <input type="text" id="location" name="location" value="{{ad.location}}">
 
-                        <label for="company-name">Company name:</label>
-                        <input type="text" id="company-name" name="name" value="">
+                <label for="company-name">Company name:</label>
+                <input type="text" id="company-name" name="name" value="{{ad.name}}">
 
-                        <label for="company-description">Company description:</label>
-                        <input type="text" id="company-description" name="description" value="">
+                <label for="company-description">Company description:</label>
+                <input type="text" id="company-description" name="description" value="{{ad.description}}">
 
-                        <article class="edit-page-button">
-                            <button class="btn-edit-ads">Edit</button>
-                        </article>
-                    </form>
-
-                    <article class="edit-page-image">
-                        <!-- Do not forget to change the path to the image -->
-                        <img src="/img/job.png" alt="image">
-                    </article>
+                <article class="edit-page-button">
+                    <button class="btn-edit-ads">Edit</button>
                 </article>
+            </form>
 
-            </section>
-        </main>
+            <article class="edit-page-image">
+                <!-- Do not forget to change the path to the image -->
+                <img src="/img/job.png" alt="image">
+            </article>
+        </article>
+
+    </section>
+</main>
