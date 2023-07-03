@@ -25,9 +25,8 @@ resourceController.post('/create', isUser, async (req, res) => {
 
 resourceController.get('/catalog', async (req, res) => {
     try {
-        // const resources = await findAll();
-        const resources = [];
-        res.render('catalog', { user: req.user, resources });
+        const ads = await findAll();
+        res.render('catalog', { user: req.user, ads });
     } catch (error) {
         res.render('default', { user: req.user });
     }
