@@ -9,19 +9,17 @@ const findUserById = async (id) => {
     return User.findById(id);
 }
 
-const register = async (username, email, password) => {
-    const isUsername = await User.findOne({ username });
+const register = async (email, password, description) => {
     const isEmail = await User.findOne({ email });
-    if (isUsername || isEmail) {
+    if (isEmail) {
         throw 'User already exists.';
     }
     const hashPass = await bcrypt.hash(password, 10);
-    return await User.create({ username, email, password: hashPass });
+    return await User.create({ email, password: hashPass, description });
 }
 
-const login = async (username, email, password) => {
-    const user = await User.findOne({ username });
-    // const user = await User.findOne({ email });
+const login = async (email, password) => {
+    const user = await User.findOne({ email });
     if (!user) {
         throw 'Username or password dont match.';
     }
@@ -29,7 +27,7 @@ const login = async (username, email, password) => {
     const isMatch = await bcrypt.compare(password, user.password);
 
     if (isMatch) {
-        const payload = { username: user.username, email: user.email, _id: user._id }; //TODO: fix here
+        const payload = { email: user.email, description: user.description, _id: user._id };
         const token = jwt.sign(payload, SECRET);
         return token;
     } else {
@@ -37,9 +35,9 @@ const login = async (username, email, password) => {
     }
 }
 
-//TODO: Delete if not needed
 const verifyToken = (user) => {
-    const payload = { username: user.username, _id: user._id }; //TODO: fix here too
+    const payload = { email: user.email, description: user.description, _id: user._id };
+
     const token = jwt.sign(payload, SECRET);
     return token;
 }
@@ -47,5 +45,5 @@ module.exports = {
     register,
     findUserById,
     login,
-    verifyToken // here also
+    verifyToken
 } 
