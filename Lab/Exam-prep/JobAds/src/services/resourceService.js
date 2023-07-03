@@ -6,7 +6,7 @@ const createResource = (data) => Resource.create(data);
 
 const findAll = () => Resource.find({}).lean();
 
-const findResourceById = (id) => Resource.findById(id).lean();
+const findResourceById = (id) => Resource.findById(id).populate('creatorId').lean();
 
 const editResource = (resourceId, data) => Resource.findByIdAndUpdate(resourceId, data);
 
