@@ -12,9 +12,13 @@ resourceController.get('/create', isUser, async (req, res) => res.render('create
 
 resourceController.post('/create', isUser, async (req, res) => {
     try {
-        const { name, image, description } = req.body;
+        const { headline, location, name, description } = req.body;
+        await createResource({ headline, location, name, description, creatorId: req.user._id });
+
+        res.redirect('/ads/catalog');
     } catch (error) {
-        res.render('create', { user: req.user, body: req.body, error: errorParser(error) });
+        console.log(error);
+        res.render('create', { user: req.user, error: errorParser(error) });
     }
 });
 
