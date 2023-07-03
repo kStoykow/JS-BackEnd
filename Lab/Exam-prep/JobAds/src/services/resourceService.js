@@ -6,6 +6,8 @@ const createResource = (data) => Resource.create(data);
 
 const findAll = () => Resource.find({}).lean();
 
+const findFirstThree = () => Resource.find({}).limit(3).lean();
+
 const findResourceById = (id) => Resource.findById(id).populate('creatorId').lean();
 
 const editResource = (resourceId, data) => Resource.findByIdAndUpdate(resourceId, data);
@@ -20,5 +22,6 @@ module.exports = {
     findResourceById,
     editResource,
     deleteResource,
-    apply
+    apply,
+    findFirstThree
 }
