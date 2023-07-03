@@ -10,6 +10,8 @@ const findFirstThree = () => Resource.find({}).limit(3).lean();
 
 const findResourceById = (id) => Resource.findById(id).populate('creatorId').lean();
 
+const getApplies= (resourceId)=> Resource.findById(resourceId).populate('applies').lean();
+
 const editResource = (resourceId, data) => Resource.findByIdAndUpdate(resourceId, data);
 
 const deleteResource = (resourceId) => Resource.findByIdAndDelete(resourceId);
@@ -23,5 +25,5 @@ module.exports = {
     editResource,
     deleteResource,
     apply,
-    findFirstThree
+    findFirstThree,getApplies
 }
