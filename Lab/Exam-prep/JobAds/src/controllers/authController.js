@@ -30,6 +30,9 @@ authController.post('/register', isGuest, async (req, res) => {
         if (!description) {
             throw 'Description is required.';
         }
+        if (password.length < 5) {
+            throw 'Password too short.';
+        }
         if (!password || (password !== repeatPassword)) {
             throw 'Password missmatch.'
         }
