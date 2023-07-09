@@ -1,6 +1,5 @@
 const Resource = require('../models/Resource');
-
-//TODO: check if await/return/lean is needed. Fix func if needed.
+const mongoose = require('mongoose');
 
 const createResource = (data) => Resource.create(data);
 
@@ -8,9 +7,13 @@ const findAll = () => Resource.find({}).lean();
 
 const findFirstThree = () => Resource.find({}).limit(3).lean();
 
-const findResourceById = (id) => Resource.findById(id).populate('creatorId').lean();
+const findResourceById = (id) => Resource.findById(id).populate('creatorId applies').lean();
 
-const getApplies= (resourceId)=> Resource.findById(resourceId).populate('applies').lean();
+const search = async (search) => {
+    const ads = await Resource.find({}).populate('creatorId').lean();
+    const matches = ads.filter(e => !search ? e : e.creatorId.email.toLowerCase() == search?.toLowerCase());
+    return matches;
+}
 
 const editResource = (resourceId, data) => Resource.findByIdAndUpdate(resourceId, data);
 
@@ -25,5 +28,6 @@ module.exports = {
     editResource,
     deleteResource,
     apply,
-    findFirstThree,getApplies
+    findFirstThree,
+    search
 }

@@ -8,8 +8,6 @@ homeController.get('/', async (req, res) => {
     try {
         const ads = await findFirstThree();
 
-        console.log(ads);
-
         res.render('home', { user: req.user, ads });
     } catch (error) {
         res.render('home', { user: req.user, body: req.body, error: errorParser(error) });
